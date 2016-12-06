@@ -1,0 +1,100 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.judopay.samples.MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="8dp">
+
+        <LinearLayout
+            android:id="@+id/payment_button"
+            style="@style/list_button"
+            android:onClick="performPayment">
+
+            <TextView
+                style="@style/list_button_primary_text"
+                android:text="@string/payment" />
+
+            <TextView
+                style="@style/list_button_secondary_text"
+                android:text="@string/with_default_settings" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/pre_auth_button"
+            style="@style/list_button"
+            android:onClick="performPreAuth">
+
+            <TextView
+                style="@style/list_button_primary_text"
+                android:text="@string/pre_auth" />
+
+            <TextView
+                style="@style/list_button_secondary_text"
+                android:text="@string/reserve_funds_on_card" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/token_payment_button"
+            style="@style/list_button"
+            android:onClick="performTokenPayment">
+
+            <TextView
+                style="@style/list_button_primary_text"
+                android:text="@string/token_payment" />
+
+            <TextView
+                style="@style/list_button_secondary_text"
+                android:text="@string/with_stored_card_token" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/token_pre_auth_button"
+            style="@style/list_button"
+            android:onClick="performTokenPreAuth">
+
+            <TextView
+                style="@style/list_button_primary_text"
+                android:text="@string/token_pre_auth" />
+
+            <TextView
+                style="@style/list_button_secondary_text"
+                android:text="@string/with_stored_card_token" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/add_card_button"
+            style="@style/list_button"
+            android:onClick="performRegisterCard">
+
+            <TextView
+                style="@style/list_button_primary_text"
+                android:text="@string/add_card" />
+
+            <TextView
+                style="@style/list_button_secondary_text"
+                android:text="@string/stored_for_future_transactions" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:text="@string/test_card_detail_instructions"
+            android:textSize="14sp"
+            tools:ignore="RtlHardcoded" />
+
+    </LinearLayout>
+
+</ScrollView>
