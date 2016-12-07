@@ -69,7 +69,7 @@ public class MainActivity extends BaseActivity {
             Intent intent = new Intent(this, PreAuthActivity.class);
 
             intent.putExtra(Judo.JUDO_OPTIONS, getJudo().newBuilder()
-                    .setConsumerReference(receipt.getConsumer().getYourConsumerReference())
+                    .setConsumerRef(receipt.getConsumer().getYourConsumerReference())
                     .setCardToken(receipt.getCardDetails())
                     .build());
 
@@ -86,7 +86,7 @@ public class MainActivity extends BaseActivity {
             Intent intent = new Intent(this, PaymentActivity.class);
 
             intent.putExtra(Judo.JUDO_OPTIONS, getJudo().newBuilder()
-                    .setConsumerReference(receipt.getConsumer().getYourConsumerReference())
+                    .setConsumerRef(receipt.getConsumer().getYourConsumerReference())
                     .setCardToken(receipt.getCardDetails())
                     .build());
 
@@ -109,7 +109,7 @@ public class MainActivity extends BaseActivity {
                 .setEnvironment(SANDBOX)
                 .setAmount(AMOUNT)
                 .setCurrency(getCurrency())
-                .setConsumerReference(REFERENCE)
+                .setConsumerRef(REFERENCE)
                 .setAvsEnabled(settingsPrefs.isAvsEnabled())
                 .setMaestroEnabled(settingsPrefs.isMaestroEnabled())
                 .setAmexEnabled(settingsPrefs.isAmexEnabled())
@@ -187,7 +187,7 @@ public class MainActivity extends BaseActivity {
         Intent intent = new Intent(this, PaymentActivity.class);
 
         intent.putExtra(Judo.JUDO_OPTIONS, getJudo().newBuilder()
-                .setConsumerReference(receipt.getConsumer().getYourConsumerReference())
+                .setConsumerRef(receipt.getConsumer().getYourConsumerReference())
                 .setCardToken(receipt.getCardDetails())
                 .build());
 
