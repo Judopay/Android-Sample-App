@@ -21,7 +21,7 @@ For the judo Android library to work correctly with your developer setup, please
 If using Android Studio and Gradle, add the Judopay Android SDK to your app's `build.gradle` file:
 
 ```groovy
-compile 'com.judopay:android-sdk:5.5.2'
+compile 'com.judopay:android-sdk:5.6'
 ```
 
 Ensure that you are using jCenter as a repository, this will be specified in the ```build.gradle``` file at the root of your project:
@@ -41,13 +41,13 @@ buildscript {
 From your app's main Activity class, or Application class, initialize the judo SDK with your API token and secret:
 ```java
 Judo judo = new Judo.Builder()
-    .setApiToken("<API_TOKEN>")
-    .setApiSecret("<API_SECRET>")
+    .setApiToken("<TOKEN>")
+    .setApiSecret("<SECRET>")
     .setEnvironment(Judo.SANDBOX)
-    .setJudoId("100915867")
+    .setJudoId("<JUDO_ID>")
     .setAmount("1.00")
     .setCurrency(Currency.GBP)
-    .setConsumerRef("<YOUR_REFERENCE>")
+    .setConsumerReference("<YOUR_REFERENCE>")
     .build();
 ```
 ##### 3. Make a payment
@@ -77,7 +77,7 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 ```
 
 ## Next steps
-The Judopay Android SDK supports a range of customization options. For more information see our [wiki documentation](https://github.com/JudoPay/Judo-Android/wiki). 
+The Judopay Android SDK supports a range of customization options. For more information see our [wiki documentation](https://github.com/Judopay/Android-Sample-App/wiki). 
 
 ## License
-See the [LICENSE](https://github.com/JudoPay/Judo-Android/blob/master/LICENSE) file for license rights and limitations (MIT).
+See the [LICENSE](https://github.com/Judopay/Android-Sample-App/blob/master/LICENSE) file for license rights and limitations (MIT).
