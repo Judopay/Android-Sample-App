@@ -48,6 +48,7 @@ Judo judo = new Judo.Builder()
     .setConsumerReference("<YOUR_REFERENCE>")
     .build();
 ```
+**Note:** Please ensure that you are using a unique consumerReference for each request.
 
 ##### 3. Make a payment
 To show the payment screen, create an Intent for the `PaymentActivity` with the ```Judo``` instance:
@@ -57,8 +58,6 @@ intent.putExtra(Judo.JUDO_OPTIONS, judo);
 
 startActivityForResult(intent, PAYMENT_REQUEST);
 ```
-**Note:** Please make sure that you are using a unique consumer reference for each different consumer.
-
 ##### 4. Check the payment result
 In the Activity that calls the Judopay SDK, override the ```onActivityResult``` method to receive the payment receipt:
 ```java
