@@ -23,11 +23,14 @@ If using Gradle, add the SDK to your app's `build.gradle` file:
 compile 'com.judopay:android-sdk:5.6.2'
 ```
 
-Ensure that you have the jcenter repository in the ```build.gradle``` file at the root of your project:
+Ensure that you have the Judo repository in the ```build.gradle``` file at the root of your project:
 ```groovy
 buildscript {
     repositories {
         jcenter()
+        maven {
+            url "http://dl.bintray.com/judopay/maven"
+        }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.2.3'
