@@ -69,7 +69,7 @@ public class MainActivity extends BaseActivity {
             Intent intent = new Intent(this, PreAuthActivity.class);
 
             intent.putExtra(Judo.JUDO_OPTIONS, getJudo().newBuilder()
-                    .setConsumerRef(receipt.getConsumer().getYourConsumerReference())
+                    .setConsumerReference(receipt.getConsumer().getYourConsumerReference())
                     .setCardToken(receipt.getCardDetails())
                     .build());
 
@@ -86,7 +86,7 @@ public class MainActivity extends BaseActivity {
             Intent intent = new Intent(this, PaymentActivity.class);
 
             intent.putExtra(Judo.JUDO_OPTIONS, getJudo().newBuilder()
-                    .setConsumerRef(receipt.getConsumer().getYourConsumerReference())
+                    .setConsumerReference(receipt.getConsumer().getYourConsumerReference())
                     .setCardToken(receipt.getCardDetails())
                     .build());
 
@@ -99,17 +99,14 @@ public class MainActivity extends BaseActivity {
     private Judo getJudo() {
         SettingsPrefs settingsPrefs = new SettingsPrefs(this);
 
-        String deviceId = ((Application) getApplication()).getDeviceId();
-
         return new Judo.Builder()
                 .setJudoId(JUDO_ID)
                 .setApiToken(API_TOKEN)
                 .setApiSecret(API_SECRET)
-                .setDeviceId(deviceId)
                 .setEnvironment(SANDBOX)
                 .setAmount(AMOUNT)
                 .setCurrency(getCurrency())
-                .setConsumerRef(REFERENCE)
+                .setConsumerReference(REFERENCE)
                 .setAvsEnabled(settingsPrefs.isAvsEnabled())
                 .setMaestroEnabled(settingsPrefs.isMaestroEnabled())
                 .setAmexEnabled(settingsPrefs.isAmexEnabled())
@@ -187,7 +184,7 @@ public class MainActivity extends BaseActivity {
         Intent intent = new Intent(this, PaymentActivity.class);
 
         intent.putExtra(Judo.JUDO_OPTIONS, getJudo().newBuilder()
-                .setConsumerRef(receipt.getConsumer().getYourConsumerReference())
+                .setConsumerReference(receipt.getConsumer().getYourConsumerReference())
                 .setCardToken(receipt.getCardDetails())
                 .build());
 
