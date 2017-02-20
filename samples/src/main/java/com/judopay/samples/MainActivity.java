@@ -18,6 +18,8 @@ import com.judopay.model.Receipt;
 import com.judopay.samples.settings.SettingsActivity;
 import com.judopay.samples.settings.SettingsPrefs;
 
+import java.util.UUID;
+
 import static com.judopay.Judo.JUDO_RECEIPT;
 import static com.judopay.Judo.PAYMENT_REQUEST;
 import static com.judopay.Judo.PRE_AUTH_REQUEST;
@@ -34,7 +36,7 @@ public class MainActivity extends BaseActivity {
     private static final String API_TOKEN = "<API_TOKEN>";
     private static final String API_SECRET = "<API_SECRET>";
 
-    private static final String REFERENCE = "AndroidSdkSampleConsumerRef";
+    private static final String REFERENCE = UUID.randomUUID().toString();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
