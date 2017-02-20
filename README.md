@@ -20,7 +20,7 @@ Please ensure the following requirements are met when integrating the SDK:
 If using Gradle, add the SDK to your app's `build.gradle` file:
 
 ```groovy
-compile 'com.judopay:android-sdk:5.6.2'
+compile 'com.judopay:android-sdk:5.6.3'
 ```
 
 Ensure that you have the Judo repository in the ```build.gradle``` file at the root of your project:
