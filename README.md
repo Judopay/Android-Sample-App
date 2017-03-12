@@ -35,7 +35,8 @@ allprojects {
 ```
 
 ##### 2. Setup
-Initialize the Judopay SDK with your [Judo ID, token and secret](https://portal.judopay.com/account/settings):
+At the point where you want to perform a payment or capture the user's card details, initialize the SDK with your account credentials from the [Judopay portal](https://portal.judopay.com/account/settings):
+
 ```java
 Judo judo = new Judo.Builder()
     .setApiToken("<TOKEN>")
@@ -47,7 +48,7 @@ Judo judo = new Judo.Builder()
     .setConsumerReference("<YOUR_REFERENCE>")
     .build();
 ```
-**Note:** Please ensure that you are using a unique consumerReference for each request.
+**Note:** Please ensure that you are using a unique consumer reference for each consumer of your app.
 
 ##### 3. Make a payment
 To show the payment screen, create an Intent for the `PaymentActivity` with the ```Judo``` instance:
