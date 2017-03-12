@@ -12,7 +12,7 @@ Use our UI components for a seamless user experience for card data capture. Mini
 Please ensure the following requirements are met when integrating the SDK:
 - Android Studio 2.3+ is installed
 - Android SDK build tools 25.0.2 is installed
-- Your app targets Android Jelly Bean (API level 16) or higher
+- The minimum SDK level of your app is Android Jelly Bean (API level 16) or higher
 - Android Support Repository and Android Support Library have the latest version installed.
 
 ## Getting started
