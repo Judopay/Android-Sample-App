@@ -1,4 +1,36 @@
-# Judo Android SDK change log
+# Judopay Android SDK changelog
+
+## [5.6.5](https://github.com/Judopay/Judo-Android/tree/5.6.5) (2017-03-03)
+- Bugfix to prevent ```JudoApiService``` from being renamed by Proguard
+- Remove versionCode for Android Pay API requests, since the field is no longer available in the Android Pay ```FullWallet``` object
+
+## [5.6.4](https://github.com/Judopay/Judo-Android/tree/5.6.4) (2017-02-28)
+- Internal updates for improved device fraud prevention
+
+## [5.6.2](https://github.com/Judopay/Judo-Android/tree/5.6.2) (2017-02-15)
+- Bugfix for 3D Secure JavaScript callback not firing correctly.
+
+## [5.6.1](https://github.com/Judopay/Judo-Android/tree/5.6.1) (2017-02-02)
+**Changes:**
+- Singapore dollar currency support.
+- The payment reference can now be set on ```*Request``` objects, if a unique reference to identify the request is required by the developer.
+- Espresso UI tests made to be more reliable
+
+## [5.6](https://github.com/Judopay/Judo-Android/tree/5.6) (2017-01-23)
+
+**Changes:**
+- Card network images have an updated design and include new logos for Mastercard and Maestro card types.
+- DeviceDNA replaces JudoShield as the library used to detect fraud in the SDK.
+- New device signals for identifying fraudulent user behavior on the card entry screen.
+- Code obfuscation is now run during the build phase to prevent the source code from being easily readable by the developer.
+- The embedded Retrofit and Android libraries have been updated to the latest version.
+- The ```Judo.setConsumerRef method``` has been renamed to ```setConsumerReference```
+- UAT environment has been removed from the SDK.
+- ```Single<Receipt>``` replaces the RxJava ```Observable<Receipt>``` type in ```JudoApiService``` as only one result is returned.
+- The UserAgent header sent by the SDK has been updated to include the name and version of the app.
+
+**Bugs fixed:**
+- Fixed an issue where views do no correctly restore their state when the app is restarted (e.g. card type, CVV length)
 
 ## [5.5.2](https://github.com/judopay/Judo-Android/tree/5.5.2) (2016-11-31)
 
