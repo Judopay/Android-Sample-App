@@ -53,10 +53,10 @@ Judo judo = new Judo.Builder()
 ##### 3. Make a payment
 To show the payment screen, create an Intent for the `PaymentActivity` with the ```Judo``` instance:
 ```java
-Intent intent = new Intent(activity, PaymentActivity.class);
+Intent intent = new Intent(this, PaymentActivity.class);
 intent.putExtra(Judo.JUDO_OPTIONS, judo);
 
-startActivityForResult(intent, PAYMENT_REQUEST);
+startActivityForResult(intent, Judo.PAYMENT_REQUEST);
 ```
 ##### 4. Check the payment result
 In the Activity that calls the Judopay SDK, override the ```onActivityResult``` method to receive the payment receipt:
@@ -64,11 +64,11 @@ In the Activity that calls the Judopay SDK, override the ```onActivityResult``` 
 @Override
 protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
-    if(requestCode == PAYMENT_REQUEST) {
+    if(requestCode == Judo.PAYMENT_REQUEST) {
         switch (resultCode) {
             case Judo.RESULT_SUCCESS:
                 Receipt receipt = data.getParcelableExtra(Judo.JUDO_RECEIPT);
-                // handle successful payment
+                // success
         }
     }
 }
