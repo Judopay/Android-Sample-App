@@ -19,7 +19,7 @@ Please ensure the following requirements are met when integrating the SDK:
 ##### 1. Integration
 Installation of the Judopay Android SDK is simple using Android Studio, you don't need to clone a repository, just add the dependency to your ```app/build.gradle``` file:
 ```groovy
-compile 'com.judopay:android-sdk:5.6.5'
+compile 'com.judopay:android-sdk:5.6.6'
 ```
 
 In your project-level build.gradle file you will need to add the Judopay Maven repository:
