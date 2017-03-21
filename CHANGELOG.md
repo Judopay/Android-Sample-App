@@ -1,5 +1,8 @@
 # Judopay Android SDK changelog
 
+## [5.6.7](https://github.com/Judopay/Judo-Android/tree/5.6.7) (2017-03-15)
+- Prevent proguard from renaming JudoApiService class name and methods
+
 ## [5.6.5](https://github.com/Judopay/Judo-Android/tree/5.6.5) (2017-03-03)
 - Bugfix to prevent ```JudoApiService``` from being renamed by Proguard
 - Remove versionCode for Android Pay API requests, since the field is no longer available in the Android Pay ```FullWallet``` object
