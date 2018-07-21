@@ -94,7 +94,5 @@
             android:text="@string/test_card_detail_instructions"
             android:textSize="14sp"
             tools:ignore="RtlHardcoded" />
-
     </LinearLayout>
-
 </ScrollView>

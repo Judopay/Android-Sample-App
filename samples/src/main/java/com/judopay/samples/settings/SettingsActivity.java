@@ -36,7 +36,6 @@ import static com.judopay.model.Currency.USD;
 import static com.judopay.model.Currency.ZAR;
 
 public class SettingsActivity extends AppCompatActivity {
-
     SwitchCompat avsSwitch;
     SwitchCompat maestroSwitch;
     SwitchCompat amexSwitch;
@@ -51,10 +50,10 @@ public class SettingsActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_settings);
 
-        avsSwitch = (SwitchCompat) findViewById(R.id.avs_switch);
-        maestroSwitch = (SwitchCompat) findViewById(R.id.maestro_switch);
-        amexSwitch = (SwitchCompat) findViewById(R.id.amex_switch);
-        currencySpinner = (Spinner) findViewById(R.id.currency_spinner);
+        avsSwitch = findViewById(R.id.avs_switch);
+        maestroSwitch = findViewById(R.id.maestro_switch);
+        amexSwitch = findViewById(R.id.amex_switch);
+        currencySpinner = findViewById(R.id.currency_spinner);
 
         currencyCodes = Arrays.asList(AUD, BRL, CAD, CHF, CZK, DKK, EUR, GBP, HKD, HUF, JPY, NOK, NZD, PLN, SEK, SGD, USD, ZAR);
 
@@ -96,7 +95,8 @@ public class SettingsActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
         });
 
         avsSwitch.setChecked(prefs.isAvsEnabled());

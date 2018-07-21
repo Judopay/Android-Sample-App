@@ -12,13 +12,11 @@ import com.google.gson.Gson;
 import com.judopay.model.Receipt;
 
 abstract class BaseActivity extends AppCompatActivity {
-
-    private static final int FINE_LOCATION_PERMISSION_REQUEST = 0x0009;
-
-    private static final String TOKEN_RECEIPT_KEY = "Judo-SampleApp-TokenReceipt";
-
     public static final String SHARED_PREFS_NAME = "Judo-SampleApp";
     public static final String CURRENCY_KEY = "Judo-SampleApp-Currency";
+
+    private static final int FINE_LOCATION_PERMISSION_REQUEST = 0x0009;
+    private static final String TOKEN_RECEIPT_KEY = "Judo-SampleApp-TokenReceipt";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,5 +44,4 @@ abstract class BaseActivity extends AppCompatActivity {
         }
         return null;
     }
-
 }
