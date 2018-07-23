@@ -1,6 +1,5 @@
 package com.judopay.samples;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -28,9 +27,7 @@ import static com.judopay.Judo.SANDBOX;
 import static com.judopay.Judo.TOKEN_PAYMENT_REQUEST;
 import static com.judopay.Judo.TOKEN_PRE_AUTH_REQUEST;
 
-@SuppressWarnings({"UnusedParameters", "WrongConstant"})
 public class MainActivity extends BaseActivity {
-
     private static final String AMOUNT = "0.02";
     private static final String JUDO_ID = "<JUDO_ID>";
     private static final String API_TOKEN = "<API_TOKEN>";
@@ -172,12 +169,7 @@ public class MainActivity extends BaseActivity {
         new AlertDialog.Builder(this)
                 .setTitle(getString(R.string.make_token_payment))
                 .setMessage(getString(R.string.registered_card_can_perform_token_payments))
-                .setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        startTokenPayment(receipt);
-                    }
-                })
+                .setPositiveButton(getString(R.string.yes), (dialog, which) -> startTokenPayment(receipt))
                 .setNegativeButton(getString(R.string.no), null)
                 .show();
     }
@@ -200,12 +192,7 @@ public class MainActivity extends BaseActivity {
                 new AlertDialog.Builder(this)
                         .setTitle(getString(R.string.payment_successful))
                         .setMessage("Receipt ID: " + response.getReceiptId())
-                        .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        })
+                        .setPositiveButton(R.string.ok, (dialog, which) -> dialog.dismiss())
                         .create()
                         .show();
                 break;
@@ -214,12 +201,7 @@ public class MainActivity extends BaseActivity {
                 new AlertDialog.Builder(this)
                         .setTitle(getString(R.string.transaction_error))
                         .setMessage(getString(R.string.could_not_perform_transaction_check_settings))
-                        .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        })
+                        .setPositiveButton(R.string.ok, (dialog, which) -> dialog.dismiss())
                         .create()
                         .show();
                 break;

@@ -25,9 +25,9 @@
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:hint="@string/credit_card_number"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:hint="@string/credit_card_number" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -46,9 +46,9 @@
                 android:layout_weight="1">
 
                 <EditText
-                    android:hint="@string/start_date"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:hint="@string/start_date"
                     tools:ignore="TextFields" />
 
             </android.support.design.widget.TextInputLayout>
@@ -65,9 +65,9 @@
                     android:layout_height="wrap_content">
 
                     <EditText
-                        android:hint="@string/issue_no"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:hint="@string/issue_no" />
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -86,10 +86,10 @@
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:hint="@string/expiry_date"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:hint="@string/expiry_date"
                     tools:ignore="TextFields" />
 
             </android.support.design.widget.TextInputLayout>
@@ -106,10 +106,10 @@
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:hint="@string/security_code"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:hint="@string/security_code" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -166,7 +166,5 @@
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
             android:text="@string/confirm_payment" />
-
     </LinearLayout>
-
 </ScrollView>
