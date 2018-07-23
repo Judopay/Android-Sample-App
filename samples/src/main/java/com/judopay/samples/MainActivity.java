@@ -2,6 +2,7 @@ package com.judopay.samples;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.StringRes;
 import android.support.v7.app.AlertDialog;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,9 +15,17 @@ import com.judopay.PreAuthActivity;
 import com.judopay.RegisterCardActivity;
 import com.judopay.model.Currency;
 import com.judopay.model.Receipt;
+import com.judopay.model.VCOPaymentRequest;
+import com.judopay.model.VCOWallet;
 import com.judopay.samples.settings.SettingsActivity;
 import com.judopay.samples.settings.SettingsPrefs;
+import com.visa.checkout.CheckoutButton;
+import com.visa.checkout.Environment;
+import com.visa.checkout.Profile;
+import com.visa.checkout.PurchaseInfo;
+import com.visa.checkout.VisaPaymentSummary;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 import static com.judopay.Judo.JUDO_RECEIPT;
@@ -32,6 +41,7 @@ public class MainActivity extends BaseActivity {
     private static final String JUDO_ID = "<JUDO_ID>";
     private static final String API_TOKEN = "<API_TOKEN>";
     private static final String API_SECRET = "<API_SECRET>";
+    private static final String VCO_KEY = "<VCO_KEY>";
 
     private static final String REFERENCE = UUID.randomUUID().toString();
 
@@ -39,6 +49,61 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        initVisaCheckoutButton();
+    }
+
+    private void initVisaCheckoutButton() {
+        Profile profile = new Profile.ProfileBuilder(VCO_KEY, Environment.SANDBOX)
+                .setDisplayName("Judo sample")
+                .setMerchantId("123")
+                .setDataLevel(Profile.DataLevel.FULL)
+                .setCountryCode(Profile.Country.GB)
+                .build();
+
+        PurchaseInfo purchaseInfo = new PurchaseInfo.PurchaseInfoBuilder(new BigDecimal(AMOUNT), PurchaseInfo.Currency.GBP)
+                .build();
+
+        CheckoutButton checkoutButton = findViewById(R.id.visaCheckoutButton);
+        checkoutButton.init(this, profile, purchaseInfo, visaPaymentSummary -> {
+            switch (visaPaymentSummary.getStatusName()) {
+                case VisaPaymentSummary.PAYMENT_SUCCESS:
+                    VCOPaymentRequest vcoPaymentRequest = new VCOPaymentRequest.Builder()
+                            .setJudoId(JUDO_ID)
+                            .setAmount(AMOUNT)
+                            .setCurrency(Currency.GBP)
+                            .setConsumerReference(UUID.randomUUID().toString())
+                            .setVCOWallet(new VCOWallet.Builder()
+                                    .setCallId(visaPaymentSummary.getCallId())
+                                    .setEncryptedKey(visaPaymentSummary.getEncKey())
+                                    .setEncryptedPaymentData(visaPaymentSummary.getEncPaymentData())
+                                    .build())
+                            .build();
+                    getJudo().getApiService(this)
+                            .vcoPayment(vcoPaymentRequest)
+                            .subscribe(
+                                    receipt -> {
+                                        String message = "Receipt ID: " + receipt.getReceiptId();
+                                        this.showDialog(R.string.payment_successful, message);
+                                    },
+                                    error -> showDialog(R.string.transaction_error, getString(R.string.could_not_perform_transaction_check_settings))
+                            );
+                    break;
+                case VisaPaymentSummary.PAYMENT_CANCEL:
+                    break;
+                default:
+                    showDialog(R.string.transaction_error, "Something went wrong with Visa Checkout");
+                    break;
+            }
+        });
+    }
+
+    private void showDialog(@StringRes int title, String message) {
+        new AlertDialog.Builder(this)
+                .setTitle(title)
+                .setMessage(message)
+                .setPositiveButton(getString(R.string.ok), (dialog, which) -> dialog.dismiss())
+                .show();
     }
 
     public void performPayment(View view) {

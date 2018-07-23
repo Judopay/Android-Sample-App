@@ -5,7 +5,7 @@ android {
 
     defaultConfig {
         applicationId 'com.judopay.samples'
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 27
         versionCode 1
         versionName '1.0'
@@ -27,6 +27,7 @@ android {
 }
 
 dependencies {
+    implementation 'visacheckout-android-sdk:visacheckout-android-sdk:6.3.0@aar'
     implementation 'com.judopay:android-sdk:5.7.1'
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support:support-compat:27.1.1'
