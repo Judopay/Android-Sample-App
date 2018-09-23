@@ -27,8 +27,8 @@ android {
 }
 
 dependencies {
-    implementation 'visacheckout-android-sdk:visacheckout-android-sdk:6.3.0@aar'
-    implementation 'com.judopay:android-sdk:5.7.2'
+    implementation 'visacheckout-android-sdk:visacheckout-android-sdk:6.6.0@aar'
+    implementation 'com.judopay:android-sdk:5.8.0'
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support:support-compat:27.1.1'
 
