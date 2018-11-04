@@ -28,11 +28,10 @@ import static com.judopay.Judo.TOKEN_PAYMENT_REQUEST;
 import static com.judopay.Judo.TOKEN_PRE_AUTH_REQUEST;
 
 public class MainActivity extends BaseActivity {
-    private static final String AMOUNT = "0.02";
     private static final String JUDO_ID = "<JUDO_ID>";
     private static final String API_TOKEN = "<API_TOKEN>";
     private static final String API_SECRET = "<API_SECRET>";
-
+    private static final String AMOUNT = "0.10";
     private static final String REFERENCE = UUID.randomUUID().toString();
 
     @Override
