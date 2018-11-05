@@ -46,7 +46,6 @@ public class MainActivity extends BaseActivity {
     private static final String API_SECRET = "<API_SECRET>";
     private static final String VCO_KEY = "<VCO_KEY>";
     private static final String AMOUNT = "0.10";
-
     private static final String REFERENCE = UUID.randomUUID().toString();
 
     @Override
