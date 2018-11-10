@@ -29,8 +29,9 @@ import com.visa.checkout.VisaPaymentSummary;
 import java.math.BigDecimal;
 import java.util.UUID;
 
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 
 import static com.judopay.Judo.JUDO_RECEIPT;
 import static com.judopay.Judo.PAYMENT_REQUEST;
@@ -48,11 +49,19 @@ public class MainActivity extends BaseActivity {
     private static final String AMOUNT = "0.10";
     private static final String REFERENCE = UUID.randomUUID().toString();
 
+    private CompositeDisposable disposables = new CompositeDisposable();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initVisaCheckoutButton();
+    }
+
+    @Override
+    protected void onDestroy() {
+        disposables.clear();
+        super.onDestroy();
     }
 
     private void initVisaCheckoutButton() {
@@ -95,14 +104,16 @@ public class MainActivity extends BaseActivity {
                                 .setEncryptedPaymentData(visaPaymentSummary.getEncPaymentData())
                                 .build())
                         .build();
-                getJudo().getApiService(this)
+
+                disposables.clear();
+                disposables.add(getJudo().getApiService(this)
                         .vcoPayment(vcoPaymentRequest)
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribeOn(Schedulers.io())
                         .subscribe(
                                 receipt -> showDialog(R.string.payment_successful, "Receipt ID: " + receipt.getReceiptId()),
                                 error -> showDialog(R.string.transaction_error, getString(R.string.could_not_perform_transaction_check_settings))
-                        );
+                        ));
                 break;
             case VisaPaymentSummary.PAYMENT_CANCEL:
                 break;
