@@ -30,6 +30,10 @@
 
         <activity android:name=".settings.SettingsActivity" />
 
+        <activity
+            android:name="com.judopay.PaymentActivity"
+            android:theme="@style/CustomPaymentTheme"
+            tools:replace="android:theme" />
     </application>
 
 </manifest>

@@ -4,6 +4,11 @@
 
     </style>
 
+    <style name="CustomPaymentTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="buttonLabel">@string/confirm_payment</item>
+        <item name="activityTitle">Make payment</item>
+    </style>
+
     <style name="list_button">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">72dp</item>
@@ -27,16 +32,4 @@
         <item name="android:textColor">#767676</item>
         <item name="android:textSize">14sp</item>
     </style>
-
-    <style name="Widget.Judo.Text.Secondary">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginLeft">@dimen/small_padding</item>
-        <item name="android:layout_marginRight">@dimen/small_padding</item>
-        <item name="android:layout_marginTop">@dimen/large_padding</item>
-        <item name="android:lineSpacingMultiplier">@dimen/spaced_text</item>
-        <item name="android:textColor">?android:attr/textColorSecondary</item>
-        <item name="android:textSize">@dimen/judo_small_text_size</item>
-    </style>
-
 </resources>

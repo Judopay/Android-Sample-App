@@ -2,17 +2,19 @@ package com.judopay.samples;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
 
 import com.judopay.Judo;
 import com.judopay.PaymentActivity;
 import com.judopay.PreAuthActivity;
 import com.judopay.RegisterCardActivity;
 import com.judopay.model.Currency;
+import com.judopay.model.CustomLayout;
 import com.judopay.model.Receipt;
 import com.judopay.samples.settings.SettingsActivity;
 import com.judopay.samples.settings.SettingsPrefs;
@@ -42,14 +44,35 @@ public class MainActivity extends BaseActivity {
 
     public void performPayment(View view) {
         Intent intent = new Intent(this, PaymentActivity.class);
-
         intent.putExtra(Judo.JUDO_OPTIONS, getJudo());
+        startActivityForResult(intent, PAYMENT_REQUEST);
+    }
+
+    public void performPaymentWithCustomLayout(View view) {
+        // based on https://github.com/Judopay/Android-Sample-App/wiki/Custom-layouts
+        CustomLayout customLayout = new CustomLayout.Builder()
+                .cardNumberInput(R.id.card_number_input)
+                .expiryDateInput(R.id.expiry_date_input)
+                .securityCodeInput(R.id.security_code_input)
+                .startDateInput(R.id.start_date_input)
+                .issueNumberInput(R.id.issue_number_input)
+                .postcodeInput(R.id.post_code_input)
+                .countrySpinner(R.id.country_spinner)
+                .submitButton(R.id.pay_button)
+                .build(R.layout.custom_layout);
+        Judo judo = getJudo().newBuilder()
+                .setCustomLayout(customLayout)
+                .setCardNumber("4976000000003436")
+                .setExpiryMonth("12")
+                .setExpiryYear("20")
+                .build();
+        Intent intent = new Intent(this, PaymentActivity.class);
+        intent.putExtra(Judo.JUDO_OPTIONS, judo);
         startActivityForResult(intent, PAYMENT_REQUEST);
     }
 
     public void performPreAuth(View view) {
         Intent intent = new Intent(this, PreAuthActivity.class);
-
         intent.putExtra(Judo.JUDO_OPTIONS, getJudo());
         startActivityForResult(intent, PRE_AUTH_REQUEST);
     }
@@ -57,7 +80,6 @@ public class MainActivity extends BaseActivity {
     public void performRegisterCard(View view) {
         Intent intent = new Intent(this, RegisterCardActivity.class);
         intent.putExtra(Judo.JUDO_OPTIONS, getJudo());
-
         startActivityForResult(intent, REGISTER_CARD_REQUEST);
     }
 
@@ -65,7 +87,6 @@ public class MainActivity extends BaseActivity {
         Receipt receipt = getLastReceipt();
         if (receipt != null) {
             Intent intent = new Intent(this, PreAuthActivity.class);
-
             intent.putExtra(Judo.JUDO_OPTIONS, getJudo().newBuilder()
                     .setConsumerReference(receipt.getConsumer().getYourConsumerReference())
                     .setCardToken(receipt.getCardDetails())
@@ -79,7 +100,6 @@ public class MainActivity extends BaseActivity {
 
     public void performTokenPayment(View view) {
         Receipt receipt = getLastReceipt();
-
         if (receipt != null) {
             Intent intent = new Intent(this, PaymentActivity.class);
 
@@ -124,8 +144,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.settings_menu_item:
+        if (item.getItemId() == R.id.settings_menu_item) {
                 showSettings();
                 return true;
         }
@@ -143,7 +162,6 @@ public class MainActivity extends BaseActivity {
             case TOKEN_PRE_AUTH_REQUEST:
                 handleResult(resultCode, data);
                 break;
-
             case REGISTER_CARD_REQUEST:
                 handleRegisterCardResult(resultCode, data);
                 break;
@@ -155,12 +173,10 @@ public class MainActivity extends BaseActivity {
     }
 
     private void handleRegisterCardResult(int resultCode, Intent data) {
-        switch (resultCode) {
-            case Judo.RESULT_SUCCESS:
+        if (resultCode == Judo.RESULT_SUCCESS) {
                 Receipt receipt = data.getParcelableExtra(JUDO_RECEIPT);
                 saveReceipt(receipt);
                 showTokenPaymentDialog(receipt);
-                break;
         }
     }
 
@@ -188,14 +204,15 @@ public class MainActivity extends BaseActivity {
         switch (resultCode) {
             case Judo.RESULT_SUCCESS:
                 Receipt response = data.getParcelableExtra(JUDO_RECEIPT);
+                if (response != null) {
                 new AlertDialog.Builder(this)
                         .setTitle(getString(R.string.payment_successful))
                         .setMessage("Receipt ID: " + response.getReceiptId())
                         .setPositiveButton(R.string.ok, (dialog, which) -> dialog.dismiss())
                         .create()
                         .show();
+                }
                 break;
-
             case Judo.RESULT_ERROR:
                 new AlertDialog.Builder(this)
                         .setTitle(getString(R.string.transaction_error))
@@ -203,6 +220,17 @@ public class MainActivity extends BaseActivity {
                         .setPositiveButton(R.string.ok, (dialog, which) -> dialog.dismiss())
                         .create()
                         .show();
+                break;
+            case Judo.RESULT_DECLINED:
+                Receipt declinedResponse = data.getParcelableExtra(JUDO_RECEIPT);
+                if (declinedResponse != null) {
+                    new AlertDialog.Builder(this)
+                            .setTitle(getString(R.string.payment_declined))
+                            .setMessage("Receipt ID: " + declinedResponse.getReceiptId())
+                            .setPositiveButton(R.string.ok, (dialog, which) -> dialog.dismiss())
+                            .create()
+                            .show();
+                }
                 break;
         }
     }

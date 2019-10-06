@@ -41,6 +41,21 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/add_card_button"
+            style="@style/list_button"
+            android:onClick="performRegisterCard">
+
+            <TextView
+                style="@style/list_button_primary_text"
+                android:text="@string/add_card" />
+
+            <TextView
+                style="@style/list_button_secondary_text"
+                android:text="@string/stored_for_future_transactions" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/token_payment_button"
             style="@style/list_button"
             android:onClick="performTokenPayment">
@@ -71,26 +86,26 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/add_card_button"
+            android:id="@+id/custom_layout_button"
             style="@style/list_button"
-            android:onClick="performRegisterCard">
+            android:onClick="performPaymentWithCustomLayout">
 
             <TextView
                 style="@style/list_button_primary_text"
-                android:text="@string/add_card" />
+                android:text="@string/payment" />
 
             <TextView
                 style="@style/list_button_secondary_text"
-                android:text="@string/stored_for_future_transactions" />
+                android:text="using a custom layout" />
 
         </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/activity_vertical_margin"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
             android:text="@string/test_card_detail_instructions"
             android:textSize="14sp"
             tools:ignore="RtlHardcoded" />

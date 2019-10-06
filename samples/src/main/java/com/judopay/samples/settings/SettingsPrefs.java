@@ -18,7 +18,7 @@ public class SettingsPrefs {
         return sharedPreferences.getBoolean(AVS, false);
     }
 
-    public void setAvsEnabled(boolean enabled) {
+    void setAvsEnabled(boolean enabled) {
         saveBoolean(AVS, enabled);
     }
 
@@ -26,7 +26,7 @@ public class SettingsPrefs {
         return sharedPreferences.getBoolean(AMEX, true);
     }
 
-    public void setAmexEnabled(boolean enabled) {
+    void setAmexEnabled(boolean enabled) {
         saveBoolean(AMEX, enabled);
     }
 
@@ -34,7 +34,7 @@ public class SettingsPrefs {
         return sharedPreferences.getBoolean(MAESTRO, false);
     }
 
-    public void setMaestroEnabled(boolean enabled) {
+    void setMaestroEnabled(boolean enabled) {
         saveBoolean(MAESTRO, enabled);
     }
 
