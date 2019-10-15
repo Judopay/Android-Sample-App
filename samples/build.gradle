@@ -33,6 +33,12 @@ dependencies {
     implementation 'androidx.core:core:1.1.0'
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.13'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    implementation('com.google.android.gms:play-services-wallet:18.0.0') {
+        exclude group: 'com.android.support', module: 'support-media-compat'
+        exclude group: 'com.android.support', module: 'support-v4'
+    }
 
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.mockito:mockito-core:2.28.2'

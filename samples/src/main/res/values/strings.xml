@@ -32,4 +32,6 @@
     <string name="start_date">Start date</string>
     <string name="credit_card_number">Card number</string>
     <string name="ok">OK</string>
+    <string name="google_pay_not_supported">This device does not support Google Pay</string>
+    <string name="custom_layout">Using a custom layout</string>
 </resources>

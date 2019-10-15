@@ -1,27 +1,52 @@
 package com.judopay.samples;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.wallet.AutoResolveHelper;
+import com.google.android.gms.wallet.PaymentData;
+import com.google.android.gms.wallet.PaymentDataRequest;
+import com.google.android.gms.wallet.PaymentsClient;
+import com.google.android.gms.wallet.WalletConstants;
+
 import com.judopay.Judo;
+import com.judopay.JudoApiService;
 import com.judopay.PaymentActivity;
+import com.judopay.PaymentMethodActivity;
 import com.judopay.PreAuthActivity;
 import com.judopay.RegisterCardActivity;
+import com.judopay.arch.GooglePaymentUtils;
 import com.judopay.model.Currency;
 import com.judopay.model.CustomLayout;
+import com.judopay.model.GooglePayRequest;
+import com.judopay.model.PaymentMethod;
 import com.judopay.model.Receipt;
 import com.judopay.samples.settings.SettingsActivity;
 import com.judopay.samples.settings.SettingsPrefs;
 
+import java.util.EnumSet;
 import java.util.UUID;
 
+import io.reactivex.Single;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
+
 import static com.judopay.Judo.JUDO_RECEIPT;
+import static com.judopay.Judo.PAYMENT_METHOD;
 import static com.judopay.Judo.PAYMENT_REQUEST;
 import static com.judopay.Judo.PRE_AUTH_REQUEST;
 import static com.judopay.Judo.REGISTER_CARD_REQUEST;
@@ -30,16 +55,35 @@ import static com.judopay.Judo.TOKEN_PAYMENT_REQUEST;
 import static com.judopay.Judo.TOKEN_PRE_AUTH_REQUEST;
 
 public class MainActivity extends BaseActivity {
+    private static final String TAG = MainActivity.class.getSimpleName();
     private static final String JUDO_ID = "<JUDO_ID>";
     private static final String API_TOKEN = "<API_TOKEN>";
     private static final String API_SECRET = "<API_SECRET>";
     private static final String AMOUNT = "0.10";
     private static final String REFERENCE = UUID.randomUUID().toString();
 
+    private TextView gPayNotSupportedTextView;
+    private View gPayButton;
+    private Disposable disposable = new CompositeDisposable();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        gPayNotSupportedTextView = findViewById(R.id.gPayNotSupportedTextView);
+        gPayButton = findViewById(R.id.gPayButton);
+        setUpGpay();
+    }
+
+    public void performPaymentMethod(View view) {
+        Intent intent = new Intent(this, PaymentMethodActivity.class);
+        intent.putExtra(Judo.GPAY_PREAUTH, false);
+        intent.putExtra(Judo.JUDO_OPTIONS, getJudo()
+                .newBuilder()
+                .setPaymentMethod(EnumSet.of(PaymentMethod.CREATE_PAYMENT, PaymentMethod.GPAY_PAYMENT))
+                .build());
+        startActivityForResult(intent, PAYMENT_METHOD);
     }
 
     public void performPayment(View view) {
@@ -152,10 +196,11 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         switch (requestCode) {
+            case PAYMENT_METHOD:
             case PAYMENT_REQUEST:
             case PRE_AUTH_REQUEST:
             case TOKEN_PAYMENT_REQUEST:
@@ -165,7 +210,61 @@ public class MainActivity extends BaseActivity {
             case REGISTER_CARD_REQUEST:
                 handleRegisterCardResult(resultCode, data);
                 break;
+            case Judo.GPAY_REQUEST:
+                handleGPAYRequest(resultCode, data);
+                break;
         }
+    }
+
+    private void handleGPAYRequest(int resultCode, Intent data) {
+        switch (resultCode) {
+            case Activity.RESULT_OK:
+                PaymentData paymentData = PaymentData.getFromIntent(data);
+                if (paymentData != null) {
+                    GooglePayRequest googlePayRequest = GooglePaymentUtils.createGooglePayRequest(getJudo(), paymentData);
+                    finishGPayRequest(googlePayRequest);
+                } else {
+                    Log.e(TAG, "LoadPaymentData failed. No payment data found.");
+                }
+                break;
+            case Activity.RESULT_CANCELED:
+                // Nothing to do here normally - the user simply cancelled without selecting a
+                // payment method.
+                break;
+            case AutoResolveHelper.RESULT_ERROR:
+                Status status = AutoResolveHelper.getStatusFromIntent(data);
+                if (status != null) {
+                    Log.e(TAG, String.format("LoadPaymentData failed. Error code: %d", status.getStatusCode()));
+                } else {
+                    Log.e(TAG, "LoadPaymentData failed");
+                }
+                break;
+        }
+    }
+
+    private void finishGPayRequest(GooglePayRequest googlePayRequest) {
+        final JudoApiService apiService = getJudo().getApiService(this);
+        Single<Receipt> apiRequest = apiService.googlePayPayment(googlePayRequest);
+
+        disposable = apiRequest
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(receipt -> {
+                    new AlertDialog.Builder(this)
+                            .setTitle(getString(R.string.payment_successful))
+                            .setMessage("Receipt ID: " + receipt.getReceiptId())
+                            .setPositiveButton(R.string.ok, (dialog, which) -> dialog.dismiss())
+                            .create()
+                            .show();
+                }, error -> {
+                    new AlertDialog.Builder(this)
+                            .setTitle(getString(R.string.transaction_error))
+                            .setMessage(getString(R.string.could_not_perform_transaction_check_settings))
+                            .setPositiveButton(R.string.ok, (dialog, which) -> dialog.dismiss())
+                            .create()
+                            .show();
+                });
+
     }
 
     private void showSettings() {
@@ -205,12 +304,12 @@ public class MainActivity extends BaseActivity {
             case Judo.RESULT_SUCCESS:
                 Receipt response = data.getParcelableExtra(JUDO_RECEIPT);
                 if (response != null) {
-                new AlertDialog.Builder(this)
-                        .setTitle(getString(R.string.payment_successful))
-                        .setMessage("Receipt ID: " + response.getReceiptId())
-                        .setPositiveButton(R.string.ok, (dialog, which) -> dialog.dismiss())
-                        .create()
-                        .show();
+                    new AlertDialog.Builder(this)
+                            .setTitle(getString(R.string.payment_successful))
+                            .setMessage("Receipt ID: " + response.getReceiptId())
+                            .setPositiveButton(R.string.ok, (dialog, which) -> dialog.dismiss())
+                            .create()
+                            .show();
                 }
                 break;
             case Judo.RESULT_ERROR:
@@ -233,5 +332,37 @@ public class MainActivity extends BaseActivity {
                 }
                 break;
         }
+    }
+
+    private void setUpGpay() {
+        Judo judo = getJudo();
+        PaymentsClient paymentsClient = GooglePaymentUtils.getGooglePayPaymentsClient(this, WalletConstants.ENVIRONMENT_PRODUCTION);
+
+        GooglePaymentUtils.checkIsReadyGooglePay(paymentsClient, result -> {
+            if (result) {
+                gPayNotSupportedTextView.setVisibility(View.GONE);
+                gPayButton.setVisibility(View.VISIBLE);
+
+                PaymentDataRequest paymentData = GooglePaymentUtils.createDefaultPaymentDataRequest(judo);
+                final Task<PaymentData> taskDefaultPaymentData = paymentsClient.loadPaymentData(paymentData);
+                gPayButton.setOnClickListener(v -> AutoResolveHelper.resolveTask(
+                        taskDefaultPaymentData,
+                        MainActivity.this,
+                        Judo.GPAY_REQUEST
+                ));
+            } else {
+                gPayNotSupportedTextView.setVisibility(View.VISIBLE);
+                gPayButton.setVisibility(View.GONE);
+            }
+        });
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (disposable != null && !disposable.isDisposed()) {
+            disposable.dispose();
+            disposable = null;
+        }
+        super.onDestroy();
     }
 }

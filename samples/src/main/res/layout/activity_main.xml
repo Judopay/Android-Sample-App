@@ -11,6 +11,21 @@
         android:paddingTop="8dp">
 
         <LinearLayout
+            android:id="@+id/payment_method_button"
+            style="@style/list_button"
+            android:onClick="performPaymentMethod">
+
+            <TextView
+                style="@style/list_button_primary_text"
+                android:text="@string/judo_payment_method" />
+
+            <TextView
+                style="@style/list_button_secondary_text"
+                android:text="@string/with_default_settings" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/payment_button"
             style="@style/list_button"
             android:onClick="performPayment">
@@ -96,7 +111,7 @@
 
             <TextView
                 style="@style/list_button_secondary_text"
-                android:text="using a custom layout" />
+                android:text="@string/custom_layout" />
 
         </LinearLayout>
 
@@ -107,7 +122,30 @@
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:layout_marginBottom="@dimen/activity_vertical_margin"
             android:text="@string/test_card_detail_instructions"
-            android:textSize="14sp"
+            android:textSize="@dimen/text_size_secondary"
             tools:ignore="RtlHardcoded" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/gPayNotSupportedTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/google_pay_not_supported"
+                android:visibility="gone"/>
+
+            <include
+                android:id="@+id/gPayButton"
+                layout="@layout/googlepay_button_no_shadow"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/google_pay_btn_height"
+                android:layout_margin="@dimen/google_pay_margin"
+                android:visibility="gone" />
+
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>
