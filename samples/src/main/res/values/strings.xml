@@ -34,4 +34,22 @@
     <string name="ok">OK</string>
     <string name="google_pay_not_supported">This device does not support Google Pay</string>
     <string name="custom_layout">Using a custom layout</string>
+    <string name="no_data">No data</string>
+
+<!--    Card details screen-->
+    <string name="end_date">End date</string>
+    <string name="last_four_digits">Last four digits</string>
+    <string name="card_token">Card token</string>
+    <string name="card_type">Card type</string>
+    <string name="card_scheme">Card Scheme</string>
+    <string name="card_funding">Card funding</string>
+    <string name="card_category">Card category</string>
+    <string name="card_country">Card country</string>
+    <string name="bank">Bank</string>
+    <string name="date">Date</string>
+    <string name="amount">Amount</string>
+    <string name="resolution">Resolution</string>
+    <string name="receipt_info">This is a receipt example showing only the createdAt, amount and currency properties of the receipt object. Please refer to our API Reference Documentation for all the properties you can display.</string>
+    <string name="home">Home</string>
+    <string name="card_details">Card details</string>
 </resources>

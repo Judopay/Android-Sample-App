@@ -34,6 +34,9 @@
             android:name="com.judopay.PaymentActivity"
             android:theme="@style/CustomPaymentTheme"
             tools:replace="android:theme" />
+
+        <activity android:name=".response.CardDetailsActivity" />
+        <activity android:name=".response.ReceiptActivity" />
     </application>
 
 </manifest>

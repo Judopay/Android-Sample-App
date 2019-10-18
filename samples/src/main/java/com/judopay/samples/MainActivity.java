@@ -20,7 +20,6 @@ import com.google.android.gms.wallet.PaymentData;
 import com.google.android.gms.wallet.PaymentDataRequest;
 import com.google.android.gms.wallet.PaymentsClient;
 import com.google.android.gms.wallet.WalletConstants;
-
 import com.judopay.Judo;
 import com.judopay.JudoApiService;
 import com.judopay.PaymentActivity;
@@ -33,6 +32,7 @@ import com.judopay.model.CustomLayout;
 import com.judopay.model.GooglePayRequest;
 import com.judopay.model.PaymentMethod;
 import com.judopay.model.Receipt;
+import com.judopay.samples.response.ReceiptActivity;
 import com.judopay.samples.settings.SettingsActivity;
 import com.judopay.samples.settings.SettingsPrefs;
 
@@ -189,8 +189,8 @@ public class MainActivity extends BaseActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.settings_menu_item) {
-                showSettings();
-                return true;
+            showSettings();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -200,12 +200,12 @@ public class MainActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         switch (requestCode) {
-            case PAYMENT_METHOD:
             case PAYMENT_REQUEST:
+            case PAYMENT_METHOD:
             case PRE_AUTH_REQUEST:
             case TOKEN_PAYMENT_REQUEST:
             case TOKEN_PRE_AUTH_REQUEST:
-                handleResult(resultCode, data);
+                handleResult(requestCode, resultCode, data);
                 break;
             case REGISTER_CARD_REQUEST:
                 handleRegisterCardResult(resultCode, data);
@@ -299,11 +299,17 @@ public class MainActivity extends BaseActivity {
         startActivityForResult(intent, TOKEN_PAYMENT_REQUEST);
     }
 
-    private void handleResult(int resultCode, Intent data) {
+    private void handleResult(int requestCode, int resultCode, Intent data) {
         switch (resultCode) {
             case Judo.RESULT_SUCCESS:
                 Receipt response = data.getParcelableExtra(JUDO_RECEIPT);
                 if (response != null) {
+                    if (requestCode == PAYMENT_REQUEST) {
+                        Intent intent = new Intent(this, ReceiptActivity.class);
+                        intent.putExtra(Judo.JUDO_RECEIPT, response);
+                        startActivity(intent);
+                        return;
+                    }
                     new AlertDialog.Builder(this)
                             .setTitle(getString(R.string.payment_successful))
                             .setMessage("Receipt ID: " + response.getReceiptId())
@@ -312,6 +318,7 @@ public class MainActivity extends BaseActivity {
                             .show();
                 }
                 break;
+
             case Judo.RESULT_ERROR:
                 new AlertDialog.Builder(this)
                         .setTitle(getString(R.string.transaction_error))
@@ -320,6 +327,7 @@ public class MainActivity extends BaseActivity {
                         .create()
                         .show();
                 break;
+
             case Judo.RESULT_DECLINED:
                 Receipt declinedResponse = data.getParcelableExtra(JUDO_RECEIPT);
                 if (declinedResponse != null) {
