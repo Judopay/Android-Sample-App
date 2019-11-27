@@ -40,6 +40,7 @@ public class SettingsActivity extends AppCompatActivity {
     SwitchCompat avsSwitch;
     SwitchCompat maestroSwitch;
     SwitchCompat amexSwitch;
+    SwitchCompat idealSwitch;
     Spinner currencySpinner;
 
     private SettingsPrefs prefs;
@@ -54,6 +55,7 @@ public class SettingsActivity extends AppCompatActivity {
         avsSwitch = findViewById(R.id.avs_switch);
         maestroSwitch = findViewById(R.id.maestro_switch);
         amexSwitch = findViewById(R.id.amex_switch);
+        idealSwitch = findViewById(R.id.ideal_switch);
         currencySpinner = findViewById(R.id.currency_spinner);
 
         currencyCodes = Arrays.asList(AUD, BRL, CAD, CHF, CZK, DKK, EUR, GBP, HKD, HUF, JPY, NOK, NZD, PLN, SEK, SGD, USD, ZAR);
@@ -106,6 +108,9 @@ public class SettingsActivity extends AppCompatActivity {
 
         amexSwitch.setChecked(prefs.isAmexEnabled());
         amexSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> prefs.setAmexEnabled(isChecked));
+
+        idealSwitch.setChecked(prefs.isIdealEnabled());
+        idealSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> prefs.setIdealEnabled(isChecked));
     }
 
     private void saveCurrency(String currency) {

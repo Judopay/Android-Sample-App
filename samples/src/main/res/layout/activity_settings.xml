@@ -25,6 +25,13 @@
         android:padding="@dimen/activity_vertical_margin"
         android:text="@string/american_express" />
 
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/ideal_switch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/activity_vertical_margin"
+        android:text="@string/ideal" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

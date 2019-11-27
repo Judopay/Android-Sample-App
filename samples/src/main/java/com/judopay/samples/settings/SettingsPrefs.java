@@ -7,6 +7,7 @@ public class SettingsPrefs {
     private static final String SHARED_PREFS_NAME = "Judo-SampleApp";
     private static final String AVS = "Avs";
     private static final String MAESTRO = "Maestro";
+    private static final String IDEAL = "i-DEAL";
     private static final String AMEX = "Amex";
     private final SharedPreferences sharedPreferences;
 
@@ -36,6 +37,14 @@ public class SettingsPrefs {
 
     void setMaestroEnabled(boolean enabled) {
         saveBoolean(MAESTRO, enabled);
+    }
+
+    public boolean isIdealEnabled() {
+        return sharedPreferences.getBoolean(IDEAL, false);
+    }
+
+    void setIdealEnabled(boolean enabled) {
+        saveBoolean(IDEAL, enabled);
     }
 
     private void saveBoolean(String key, boolean enabled) {

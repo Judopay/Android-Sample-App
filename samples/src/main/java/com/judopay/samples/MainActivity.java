@@ -21,6 +21,7 @@ import com.google.android.gms.wallet.PaymentData;
 import com.google.android.gms.wallet.PaymentDataRequest;
 import com.google.android.gms.wallet.PaymentsClient;
 import com.google.android.gms.wallet.WalletConstants;
+import com.judopay.IdealPaymentActivity;
 import com.judopay.Judo;
 import com.judopay.JudoApiService;
 import com.judopay.PaymentActivity;
@@ -31,7 +32,9 @@ import com.judopay.arch.GooglePaymentUtils;
 import com.judopay.model.Currency;
 import com.judopay.model.CustomLayout;
 import com.judopay.model.GooglePayRequest;
+import com.judopay.model.OrderStatus;
 import com.judopay.model.PaymentMethod;
+import com.judopay.model.PrimaryAccountDetails;
 import com.judopay.model.Receipt;
 import com.judopay.samples.response.ReceiptActivity;
 import com.judopay.samples.settings.SettingsActivity;
@@ -47,6 +50,9 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
+import static com.judopay.Judo.IDEAL_ORDER_ID;
+import static com.judopay.Judo.IDEAL_PAYMENT;
+import static com.judopay.Judo.IDEAL_STATUS;
 import static com.judopay.Judo.JUDO_RECEIPT;
 import static com.judopay.Judo.PAYMENT_METHOD;
 import static com.judopay.Judo.PAYMENT_REQUEST;
@@ -72,8 +78,9 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Fabric.with(new Crashlytics());
-
+        if (!BuildConfig.DEBUG) {
+            Fabric.with(this, new Crashlytics());
+        }
         gPayNotSupportedTextView = findViewById(R.id.gPayNotSupportedTextView);
         gPayButton = findViewById(R.id.gPayButton);
         setUpGpay();
@@ -116,6 +123,10 @@ public class MainActivity extends BaseActivity {
         Intent intent = new Intent(this, PaymentActivity.class);
         intent.putExtra(Judo.JUDO_OPTIONS, judo);
         startActivityForResult(intent, PAYMENT_REQUEST);
+    }
+
+    public void performIdealPayment(View view) {
+        IdealPaymentActivity.openIdealScreen(this, getJudo());
     }
 
     public void performPreAuth(View view) {
@@ -175,6 +186,8 @@ public class MainActivity extends BaseActivity {
                 .setAvsEnabled(settingsPrefs.isAvsEnabled())
                 .setMaestroEnabled(settingsPrefs.isMaestroEnabled())
                 .setAmexEnabled(settingsPrefs.isAmexEnabled())
+                .setIdealEnabled(settingsPrefs.isIdealEnabled())
+                .setPrimaryAccountDetails(getPrimaryAccountDetails())
                 .build();
     }
 
@@ -208,6 +221,7 @@ public class MainActivity extends BaseActivity {
             case PRE_AUTH_REQUEST:
             case TOKEN_PAYMENT_REQUEST:
             case TOKEN_PRE_AUTH_REQUEST:
+            case Judo.IDEAL_PAYMENT:
                 handleResult(requestCode, resultCode, data);
                 break;
             case REGISTER_CARD_REQUEST:
@@ -216,6 +230,19 @@ public class MainActivity extends BaseActivity {
             case Judo.GPAY_REQUEST:
                 handleGPAYRequest(resultCode, data);
                 break;
+        }
+    }
+
+    private void handleIdealRequest(int resultCode, Intent data) {
+        Toast toast;
+        switch (resultCode) {
+            case Judo.IDEAL_SUCCESS:
+                OrderStatus orderStatus = (OrderStatus) data.getSerializableExtra(IDEAL_STATUS);
+                String orderId = data.getStringExtra(IDEAL_ORDER_ID);
+                toast = Toast.makeText(this, orderId + " " + getString(orderStatus.getOrderStatusTextId()), Toast.LENGTH_SHORT);
+                toast.show();
+            case Judo.IDEAL_ERROR:
+//                handle on fail
         }
     }
 
@@ -276,9 +303,9 @@ public class MainActivity extends BaseActivity {
 
     private void handleRegisterCardResult(int resultCode, Intent data) {
         if (resultCode == Judo.RESULT_SUCCESS) {
-                Receipt receipt = data.getParcelableExtra(JUDO_RECEIPT);
-                saveReceipt(receipt);
-                showTokenPaymentDialog(receipt);
+            Receipt receipt = data.getParcelableExtra(JUDO_RECEIPT);
+            saveReceipt(receipt);
+            showTokenPaymentDialog(receipt);
         }
     }
 
@@ -303,6 +330,9 @@ public class MainActivity extends BaseActivity {
     }
 
     private void handleResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == IDEAL_PAYMENT || requestCode == PAYMENT_METHOD) {
+            handleIdealRequest(resultCode, data);
+        }
         switch (resultCode) {
             case Judo.RESULT_SUCCESS:
                 Receipt response = data.getParcelableExtra(JUDO_RECEIPT);
@@ -366,6 +396,15 @@ public class MainActivity extends BaseActivity {
                 gPayButton.setVisibility(View.GONE);
             }
         });
+    }
+
+    private PrimaryAccountDetails getPrimaryAccountDetails() {
+        return new PrimaryAccountDetails.Builder()
+                .setName("Judo Pay")
+                .setAccountNumber("1234567")
+                .setDateOfBirth("2000-12-31")
+                .setPostCode("EC2A 4DP")
+                .build();
     }
 
     @Override
