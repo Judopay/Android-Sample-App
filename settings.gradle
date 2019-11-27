@@ -1,1 +1,2 @@
-include ':samples'
+include ':samples', ':judo-sdk'
+project(':judo-sdk').projectDir = new File('../Projects/Judo-Android/judo-sdk')

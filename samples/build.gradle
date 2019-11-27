@@ -1,4 +1,19 @@
+buildscript {
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+    }
+
+    dependencies {
+        classpath 'io.fabric.tools:gradle:1.+'
+    }
+}
 apply plugin: 'com.android.application'
+
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
+}
+
+apply plugin: 'io.fabric'
 
 android {
     compileSdkVersion 29
@@ -31,7 +46,8 @@ android {
 }
 
 dependencies {
-    implementation 'com.judopay:android-sdk:8.0.0'
+//    implementation 'com.judopay:android-sdk:8.0.0'
+    implementation project(":judo-sdk")
 
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.core:core:1.1.0'
@@ -47,4 +63,5 @@ dependencies {
 
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.mockito:mockito-core:2.28.2'
+    implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
 }

@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.wallet.AutoResolveHelper;
@@ -39,6 +40,7 @@ import com.judopay.samples.settings.SettingsPrefs;
 import java.util.EnumSet;
 import java.util.UUID;
 
+import io.fabric.sdk.android.Fabric;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -70,6 +72,7 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Fabric.with(new Crashlytics());
 
         gPayNotSupportedTextView = findViewById(R.id.gPayNotSupportedTextView);
         gPayButton = findViewById(R.id.gPayButton);
