@@ -31,6 +31,7 @@ import com.judopay.model.Currency;
 import com.judopay.model.CustomLayout;
 import com.judopay.model.GooglePayRequest;
 import com.judopay.model.PaymentMethod;
+import com.judopay.model.PrimaryAccountDetails;
 import com.judopay.model.Receipt;
 import com.judopay.samples.response.ReceiptActivity;
 import com.judopay.samples.settings.SettingsActivity;
@@ -172,6 +173,7 @@ public class MainActivity extends BaseActivity {
                 .setAvsEnabled(settingsPrefs.isAvsEnabled())
                 .setMaestroEnabled(settingsPrefs.isMaestroEnabled())
                 .setAmexEnabled(settingsPrefs.isAmexEnabled())
+                .setPrimaryAccountDetails(getPrimaryAccountDetails())
                 .build();
     }
 
@@ -363,6 +365,15 @@ public class MainActivity extends BaseActivity {
                 gPayButton.setVisibility(View.GONE);
             }
         });
+    }
+
+    private PrimaryAccountDetails getPrimaryAccountDetails() {
+        return new PrimaryAccountDetails.Builder()
+                .setName("Judo Pay")
+                .setAccountNumber("1234567")
+                .setDateOfBirth("2000-12-31")
+                .setPostCode("EC2A 4DP")
+                .build();
     }
 
     @Override
