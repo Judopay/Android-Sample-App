@@ -115,6 +115,21 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/ideal_payment_button"
+            style="@style/list_button"
+            android:onClick="performIdealPayment">
+
+            <TextView
+                style="@style/list_button_primary_text"
+                android:text="@string/ideal" />
+
+            <TextView
+                style="@style/list_button_secondary_text"
+                android:text="@string/ideal_custom_button" />
+
+        </LinearLayout>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

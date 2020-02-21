@@ -20,6 +20,7 @@ import com.google.android.gms.wallet.PaymentData;
 import com.google.android.gms.wallet.PaymentDataRequest;
 import com.google.android.gms.wallet.PaymentsClient;
 import com.google.android.gms.wallet.WalletConstants;
+import com.judopay.IdealPaymentActivity;
 import com.judopay.Judo;
 import com.judopay.JudoApiService;
 import com.judopay.PaymentActivity;
@@ -46,6 +47,7 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
+import static com.judopay.Judo.IDEAL_PAYMENT;
 import static com.judopay.Judo.JUDO_RECEIPT;
 import static com.judopay.Judo.PAYMENT_METHOD;
 import static com.judopay.Judo.PAYMENT_REQUEST;
@@ -60,6 +62,7 @@ public class MainActivity extends BaseActivity {
     private static final String JUDO_ID = "<JUDO_ID>";
     private static final String API_TOKEN = "<API_TOKEN>";
     private static final String API_SECRET = "<API_SECRET>";
+    private static final String SITE_ID = "<SITE_ID>";
     private static final String AMOUNT = "0.10";
     private static final String REFERENCE = UUID.randomUUID().toString();
 
@@ -116,6 +119,12 @@ public class MainActivity extends BaseActivity {
         startActivityForResult(intent, PAYMENT_REQUEST);
     }
 
+    public void performIdealPayment(View view){
+        Intent intent = new Intent(this, IdealPaymentActivity.class);
+        intent.putExtra(Judo.JUDO_OPTIONS, getJudo());
+        this.startActivityForResult(intent, IDEAL_PAYMENT);
+    }
+
     public void performPreAuth(View view) {
         Intent intent = new Intent(this, PreAuthActivity.class);
         intent.putExtra(Judo.JUDO_OPTIONS, getJudo());
@@ -164,15 +173,18 @@ public class MainActivity extends BaseActivity {
 
         return new Judo.Builder()
                 .setJudoId(JUDO_ID)
+                .setSiteId(SITE_ID)
                 .setApiToken(API_TOKEN)
                 .setApiSecret(API_SECRET)
                 .setEnvironment(SANDBOX)
                 .setAmount(AMOUNT)
                 .setCurrency(getCurrency())
                 .setConsumerReference(REFERENCE)
+                .setPaymentReference(REFERENCE)
                 .setAvsEnabled(settingsPrefs.isAvsEnabled())
                 .setMaestroEnabled(settingsPrefs.isMaestroEnabled())
                 .setAmexEnabled(settingsPrefs.isAmexEnabled())
+                .setIdealEnabled(settingsPrefs.isIdealEnabled())
                 .setPrimaryAccountDetails(getPrimaryAccountDetails())
                 .build();
     }
@@ -207,6 +219,7 @@ public class MainActivity extends BaseActivity {
             case PRE_AUTH_REQUEST:
             case TOKEN_PAYMENT_REQUEST:
             case TOKEN_PRE_AUTH_REQUEST:
+            case Judo.IDEAL_PAYMENT:
                 handleResult(requestCode, resultCode, data);
                 break;
             case REGISTER_CARD_REQUEST:

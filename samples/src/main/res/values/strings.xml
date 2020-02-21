@@ -3,6 +3,7 @@
     <string name="avs_label">Address Verification System (AVS)</string>
     <string name="settings">Settings</string>
     <string name="american_express">American Express</string>
+    <string name="ideal">iDEAL</string>
     <string name="maestro">Maestro</string>
     <string name="payment">Payment</string>
     <string name="pre_auth">Pre-auth</string>
@@ -52,4 +53,5 @@
     <string name="receipt_info">This is a receipt example showing only the createdAt, amount and currency properties of the receipt object. Please refer to our API Reference Documentation for all the properties you can display.</string>
     <string name="home">Home</string>
     <string name="card_details">Card details</string>
+    <string name="ideal_custom_button">Custom button to perform iDEAL payment</string>
 </resources>
