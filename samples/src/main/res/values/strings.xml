@@ -1,57 +1,66 @@
 <resources>
-    <string name="judopay">Judopay</string>
-    <string name="avs_label">Address Verification System (AVS)</string>
-    <string name="settings">Settings</string>
-    <string name="american_express">American Express</string>
-    <string name="ideal">iDEAL</string>
-    <string name="maestro">Maestro</string>
-    <string name="payment">Payment</string>
-    <string name="pre_auth">Pre-auth</string>
-    <string name="token_payment">Token payment</string>
-    <string name="test_card_detail_instructions">To view test card details:\nSign in to judo and go to Developer/Tools.</string>
-    <string name="add_card">Add card</string>
-    <string name="reserve_funds_on_card">to reserve funds on a card</string>
-    <string name="with_stored_card_token">with a stored card token</string>
-    <string name="stored_for_future_transactions">to be stored for future transactions</string>
-    <string name="with_default_settings">with default settings</string>
-    <string name="make_token_payment">Make token payment?</string>
-    <string name="registered_card_can_perform_token_payments">Registered card can now be used to perform token payments</string>
-    <string name="yes">Yes</string>
-    <string name="no">No</string>
-    <string name="token_pre_auth">Token pre-auth</string>
-    <string name="add_card_to_make_token_transaction">Add card to make token transaction</string>
-    <string name="transaction_error">Transaction error</string>
-    <string name="could_not_perform_transaction_check_settings">Could not perform the transaction, please check your settings</string>
-    <string name="currency">Currency</string>
-    <string name="payment_successful">Payment successful</string>
-    <string name="payment_declined">Payment declined</string>
-    <string name="confirm_payment">Confirm payment</string>
-    <string name="enter_your_payment_details_to_confirm_the_purchase">Enter your payment details to confirm the purchase</string>
-    <string name="security_code">Security code</string>
-    <string name="expiry_date">Expiry date</string>
-    <string name="issue_no">Issue no.</string>
-    <string name="start_date">Start date</string>
-    <string name="credit_card_number">Card number</string>
-    <string name="ok">OK</string>
-    <string name="google_pay_not_supported">This device does not support Google Pay</string>
-    <string name="custom_layout">Using a custom layout</string>
-    <string name="no_data">No data</string>
+    <string name="app_name">Judopay demo</string>
+    <string name="title_activity_demo_feature_list">Judo Examples</string>
 
-<!--    Card details screen-->
-    <string name="end_date">End date</string>
-    <string name="last_four_digits">Last four digits</string>
-    <string name="card_token">Card token</string>
-    <string name="card_type">Card type</string>
-    <string name="card_scheme">Card Scheme</string>
-    <string name="card_funding">Card funding</string>
-    <string name="card_category">Card category</string>
-    <string name="card_country">Card country</string>
-    <string name="bank">Bank</string>
-    <string name="date">Date</string>
-    <string name="amount">Amount</string>
-    <string name="resolution">Resolution</string>
-    <string name="receipt_info">This is a receipt example showing only the createdAt, amount and currency properties of the receipt object. Please refer to our API Reference Documentation for all the properties you can display.</string>
-    <string name="home">Home</string>
-    <string name="card_details">Card details</string>
-    <string name="ideal_custom_button">Custom button to perform iDEAL payment</string>
+    <string name="feature_title_payment">Pay with card</string>
+    <string name="feature_surtitle_payment">by entering card details</string>
+
+    <string name="feature_title_preauth">Pre-auth with card</string>
+    <string name="feature_surtitle_preauth">pre-auth by entering card details</string>
+
+    <string name="feature_title_create_card_token">Register card</string>
+    <string name="feature_surtitle_create_card_token">to be stored for future transactions</string>
+
+    <string name="feature_title_save_card">Check card</string>
+    <string name="feature_surtitle_save_card">to validate a card</string>
+
+    <string name="feature_title_check_card">Save card</string>
+    <string name="feature_surtitle_check_card">to be stored for future transactions</string>
+
+    <string name="feature_title_google_pay_payment">Google Pay payment</string>
+    <string name="feature_surtitle_google_pay_payment">with a wallet card</string>
+
+    <string name="feature_title_google_pay_preauth">Google Pay pre-auth</string>
+    <string name="feature_surtitle_google_pay_preauth">pre-auth with a wallet card</string>
+
+    <string name="feature_title_payment_methods">Payment methods</string>
+    <string name="feature_surtitle_payment_methods">with default payment methods</string>
+
+    <string name="feature_title_preauth_payment_methods">Pre-auth payment methods</string>
+    <string name="feature_surtitle_preauth_payment_methods">with default pre-auth payment methods</string>
+    <string name="title_settings">Settings</string>
+
+    <!-- Preference Titles -->
+    <string name="api_header">API Configurations</string>
+    <string name="amount_header">Amount</string>
+    <string name="others_header">Others</string>
+
+    <!-- Messages Preferences -->
+    <string name="is_sandboxed_title">Sandboxed</string>
+    <string name="is_sandboxed_summary">Use Judopay API sandbox environment</string>
+
+    <string name="judo_id_title">Judo ID</string>
+    <string name="judo_id_summary">Your Judo ID</string>
+
+    <string name="site_id_title">Site ID</string>
+    <string name="site_id_summary">Your Site ID</string>
+
+    <string name="token_title">Token</string>
+    <string name="token_summary">Your API authorization token</string>
+
+    <string name="secret_title">Secret</string>
+    <string name="secret_summary">Your API authorization secret</string>
+
+    <string name="amount_title">Amount</string>
+    <string name="amount_summary">Your amount</string>
+
+    <string name="currency_title">Currency</string>
+    <string name="currency_summary">Your amount currency</string>
+
+    <string name="card_networks_title">Supported card networks</string>
+    <string name="card_networks_summary">Card networks you want to support</string>
+
+    <string name="payment_methods_title">Payment methods</string>
+    <string name="payment_methods_summary">Payment methods you want to support</string>
+
 </resources>

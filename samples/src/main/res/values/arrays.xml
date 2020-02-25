@@ -1,0 +1,98 @@
+<resources>
+    <!-- Currency Preference -->
+    <string-array name="currency_entries">
+        <item>AED - United Arab Emirates Dirham</item>
+        <item>AUD - Australia Dollar</item>
+        <item>BRL - Brazil Real</item>
+        <item>CAD - Canada Dollar</item>
+        <item>CHF - Switzerland Franc</item>
+        <item>CZK - Czech Republic Koruna</item>
+        <item>DKK - Denmark Krone</item>
+        <item>EUR - Euro Member Countries</item>
+        <item>GBP - United Kingdom Pound</item>
+        <item>HKD - Hong Kong Dollar</item>
+        <item>HUF - Hungary Forint</item>
+        <item>JPY - Japan Yen</item>
+        <item>NOK - Norway Krone</item>
+        <item>NZD - New Zealand Dollar</item>
+        <item>PLN - Poland Zloty</item>
+        <item>SEK - Sweden Krona</item>
+        <item>SGD - Singapore Dollar</item>
+        <item>QAR - Qatar Riyal</item>
+        <item>SAR - Saudi Arabia Riyal</item>
+        <item>USD - United States Dollar</item>
+        <item>ZAR - South Africa Rand</item>
+    </string-array>
+
+    <string-array name="currency_values">
+        <item>AED</item>
+        <item>AUD</item>
+        <item>BRL</item>
+        <item>CAD</item>
+        <item>CHF</item>
+        <item>CZK</item>
+        <item>DKK</item>
+        <item>EUR</item>
+        <item>GBP</item>
+        <item>HKD</item>
+        <item>HUF</item>
+        <item>JPY</item>
+        <item>NOK</item>
+        <item>NZD</item>
+        <item>PLN</item>
+        <item>SEK</item>
+        <item>SGD</item>
+        <item>QAR</item>
+        <item>SAR</item>
+        <item>USD</item>
+        <item>ZAR</item>
+    </string-array>
+
+    <!-- Supported card network Preference-->
+    <string-array name="card_networks_entries">
+        <item>Visa</item>
+        <item>Master Card</item>
+        <item>Maestro</item>
+        <item>AMEX</item>
+        <item>China Union Pay</item>
+        <item>JCB</item>
+        <item>Discover</item>
+        <item>Diners Club</item>
+    </string-array>
+
+    <string-array name="card_networks_values">
+        <item>VISA</item>
+        <item>MASTER_CARD</item>
+        <item>MAESTRO</item>
+        <item>AMEX</item>
+        <item>CHINA_UNION_PAY</item>
+        <item>JCB</item>
+        <item>DISCOVER</item>
+        <item>DINERS_CLUB</item>
+    </string-array>
+
+    <string-array name="default_card_networks_values">
+        <item>VISA</item>
+        <item>MASTER_CARD</item>
+        <item>MAESTRO</item>
+    </string-array>
+
+    <!-- Supported payment methods Preference-->
+    <string-array name="payment_methods_entries">
+        <item>Card</item>
+        <item>iDeal</item>
+        <item>Google Pay</item>
+    </string-array>
+
+    <string-array name="payment_methods_values">
+        <item>CARD</item>
+        <item>IDEAL</item>
+        <item>GOOGLE_PAY</item>
+    </string-array>
+
+    <string-array name="default_payment_methods_values">
+        <item>CARD</item>
+        <item>IDEAL</item>
+    </string-array>
+
+</resources>
