@@ -14,15 +14,6 @@
             app:summary="@string/is_token_payment_summary"
             app:title="@string/is_token_payment_title" />
 
-        <ListPreference
-            app:defaultValue="PAYMENT"
-            app:entries="@array/transaction_type_entries"
-            app:entryValues="@array/transaction_type_values"
-            app:key="transaction_type"
-            app:summary="@string/transaction_type_summary"
-            app:title="@string/transaction_type_title"
-            app:useSimpleSummaryProvider="true" />
-
         <EditTextPreference
             app:defaultValue="@string/default_judo_id"
             app:key="judo_id"

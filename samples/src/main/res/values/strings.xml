@@ -65,8 +65,4 @@
 
     <string name="is_token_payment_title">Token payment</string>
     <string name="is_token_payment_summary">Enable token payment</string>
-
-    <string name="transaction_type_title">Transaction type</string>
-    <string name="transaction_type_summary">Change transaction type request</string>
-
 </resources>

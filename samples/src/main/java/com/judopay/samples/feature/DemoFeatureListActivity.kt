@@ -1,9 +1,11 @@
 package com.judopay.samples.feature
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.preference.PreferenceManager
@@ -11,6 +13,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import com.crashlytics.android.Crashlytics
 import com.google.android.material.snackbar.Snackbar
 import com.judopay.JUDO_OPTIONS
+import com.judopay.JUDO_PRE_AUTH
 import com.judopay.JUDO_RECEIPT
 import com.judopay.Judo
 import com.judopay.JudoActivity
@@ -21,7 +24,6 @@ import com.judopay.model.CardNetwork
 import com.judopay.model.Currency
 import com.judopay.model.PaymentMethod
 import com.judopay.model.Reference
-import com.judopay.model.Transaction
 import com.judopay.samples.BuildConfig
 import com.judopay.samples.R
 import com.judopay.samples.feature.adapter.DemoFeaturesAdapter
@@ -64,8 +66,20 @@ class DemoFeatureListActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        val receipt: Receipt? = data?.getParcelableExtra(JUDO_RECEIPT)
-        println(receipt)
+        when (requestCode) {
+            PAYMENT_METHODS -> {
+                val receipt: Receipt? = data?.getParcelableExtra(JUDO_RECEIPT)
+                if (resultCode == Activity.RESULT_OK) {
+                    AlertDialog.Builder(this)
+                        .setTitle("Transaction ${receipt?.receiptId} successful")
+                        .setPositiveButton(R.string.close) { dialog, _ -> dialog.dismiss() }.show()
+                } else {
+                    AlertDialog.Builder(this)
+                        .setTitle(R.string.transaction_unsuccessful)
+                        .setPositiveButton(R.string.close) { dialog, _ -> dialog.dismiss() }.show()
+                }
+            }
+        }
     }
 
     private fun showcaseFeature(feature: DemoFeature) = when (feature) {
@@ -76,15 +90,28 @@ class DemoFeatureListActivity : AppCompatActivity() {
         DemoFeature.CHECK_CARD,
         DemoFeature.GOOGLE_PAY_PAYMENT,
         DemoFeature.GOOGLE_PAY_PREAUTH -> toast("Unimplemented.")
-        DemoFeature.PAYMENT_METHODS,
-        DemoFeature.PREAUTH_PAYMENT_METHODS -> presentPaymentMethods()
+        DemoFeature.PAYMENT_METHODS -> presentPaymentMethods()
+        DemoFeature.PREAUTH_PAYMENT_METHODS -> presentPreAuthPaymentMethods()
+    }
+
+    private fun presentPreAuthPaymentMethods() {
+        presentScreen(PAYMENT_METHODS, Intent(this, JudoActivity::class.java).apply {
+            putExtra(JUDO_OPTIONS, judo)
+            putExtra(JUDO_PRE_AUTH, true)
+        })
     }
 
     private fun presentPaymentMethods() {
+        presentScreen(
+            PAYMENT_METHODS,
+            Intent(this, JudoActivity::class.java)
+                .putExtra(JUDO_OPTIONS, judo)
+        )
+    }
+
+    private fun presentScreen(requestCode: Int, intent: Intent) {
         try {
-            val intent = Intent(this, JudoActivity::class.java)
-            intent.putExtra(JUDO_OPTIONS, judo)
-            startActivityForResult(intent, PAYMENT_METHODS)
+            startActivityForResult(intent, requestCode)
         } catch (exception: Exception) {
             when (exception) {
                 is IllegalArgumentException, is IllegalStateException -> {
@@ -122,7 +149,6 @@ class DemoFeatureListActivity : AppCompatActivity() {
             val siteId = prefs.getString("site_id", null)
             val token = prefs.getString("token", null)
             val secret = prefs.getString("secret", null)
-            val transactionType = prefs.getString("transaction_type", null)
             val amountValue = prefs.getString("amount", null)
             val currency = prefs.getString("currency", null)
             val supportedNetworks = prefs.getStringSet("supported_networks", null)?.map { CardNetwork.valueOf(it) }?.toTypedArray()
@@ -133,10 +159,6 @@ class DemoFeatureListActivity : AppCompatActivity() {
             val myCurrency = if (!currency.isNullOrEmpty()) {
                 Currency.valueOf(currency)
             } else Currency.GBP
-
-            val myTransactionType = if (!transactionType.isNullOrEmpty()) {
-                Transaction.valueOf(transactionType)
-            } else Transaction.PAYMENT
 
             val amount = Amount.Builder()
                     .setAmount(amountValue)
@@ -156,8 +178,7 @@ class DemoFeatureListActivity : AppCompatActivity() {
                     .setAmount(amount)
                     .setReference(reference)
                     .setIsSandboxed(isSandboxed)
-                .setTransactionType(myTransactionType)
-                .setIsTokenPayment(isTokenPayment)
+                    .setIsTokenPayment(isTokenPayment)
                     .setSupportedCardNetworks(supportedNetworks)
                     .setPaymentMethods(paymentMethods)
                     .build()
