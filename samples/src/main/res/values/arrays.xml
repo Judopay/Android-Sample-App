@@ -48,6 +48,17 @@
         <item>ZAR</item>
     </string-array>
 
+    <!-- Transaction type Preference-->
+    <string-array name="transaction_type_entries">
+        <item>Payment</item>
+        <item>Pre-Auth</item>
+    </string-array>
+
+    <string-array name="transaction_type_values">
+        <item>PAYMENT</item>
+        <item>PRE_AUTH</item>
+    </string-array>
+
     <!-- Supported card network Preference-->
     <string-array name="card_networks_entries">
         <item>Visa</item>
