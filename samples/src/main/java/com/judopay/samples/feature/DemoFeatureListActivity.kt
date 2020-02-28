@@ -158,9 +158,9 @@ class DemoFeatureListActivity : AppCompatActivity() {
             val sortedPaymentMethods = mutableListOf<PaymentMethod>()
             with(paymentMethods?.toList()) {
                 if (this != null) {
-                    if (contains(PaymentMethod.CARD)) sortedPaymentMethods.add(0, PaymentMethod.CARD)
-                    if (contains(PaymentMethod.GOOGLE_PAY)) sortedPaymentMethods.add(1, PaymentMethod.GOOGLE_PAY)
-                    if (contains(PaymentMethod.IDEAL)) sortedPaymentMethods.add(2, PaymentMethod.IDEAL)
+                    if (contains(PaymentMethod.CARD)) sortedPaymentMethods.add(PaymentMethod.CARD)
+                    if (contains(PaymentMethod.GOOGLE_PAY)) sortedPaymentMethods.add(PaymentMethod.GOOGLE_PAY)
+                    if (contains(PaymentMethod.IDEAL)) sortedPaymentMethods.add(PaymentMethod.IDEAL)
                 }
             }
 
