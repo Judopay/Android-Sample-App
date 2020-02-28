@@ -76,7 +76,7 @@ class DemoFeatureListActivity : AppCompatActivity() {
                         .setPositiveButton(R.string.close) { dialog, _ -> dialog.dismiss() }.show()
                 } else if (resultCode == RESULT_ERROR) {
                     AlertDialog.Builder(this)
-                        .setTitle(R.string.transaction_unsuccessful)
+                        .setTitle(R.string.card_transaction_unsuccesful_error)
                         .setPositiveButton(R.string.close) { dialog, _ -> dialog.dismiss() }.show()
                 }
             }
