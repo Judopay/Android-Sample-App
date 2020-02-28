@@ -155,6 +155,15 @@ class DemoFeatureListActivity : AppCompatActivity() {
             val supportedNetworks = prefs.getStringSet("supported_networks", null)?.map { CardNetwork.valueOf(it) }?.toTypedArray()
             val paymentMethods = prefs.getStringSet("payment_methods", null)?.map { PaymentMethod.valueOf(it) }?.toTypedArray()
 
+            val sortedPaymentMethods = mutableListOf<PaymentMethod>()
+            with(paymentMethods?.toList()) {
+                if (this != null) {
+                    if (contains(PaymentMethod.CARD)) sortedPaymentMethods.add(0, PaymentMethod.CARD)
+                    if (contains(PaymentMethod.GOOGLE_PAY)) sortedPaymentMethods.add(1, PaymentMethod.GOOGLE_PAY)
+                    if (contains(PaymentMethod.IDEAL)) sortedPaymentMethods.add(2, PaymentMethod.IDEAL)
+                }
+            }
+
             val randomString = UUID.randomUUID().toString()
 
             val myCurrency = if (!currency.isNullOrEmpty()) {
@@ -181,7 +190,7 @@ class DemoFeatureListActivity : AppCompatActivity() {
                     .setIsSandboxed(isSandboxed)
                     .setIsTokenPayment(isTokenPayment)
                     .setSupportedCardNetworks(supportedNetworks)
-                    .setPaymentMethods(paymentMethods)
+                    .setPaymentMethods(sortedPaymentMethods.toTypedArray())
                     .build()
         }
 }
