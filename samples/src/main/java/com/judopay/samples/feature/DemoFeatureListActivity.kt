@@ -18,6 +18,7 @@ import com.judopay.JUDO_RECEIPT
 import com.judopay.Judo
 import com.judopay.JudoActivity
 import com.judopay.PAYMENT_METHODS
+import com.judopay.RESULT_ERROR
 import com.judopay.api.model.response.Receipt
 import com.judopay.model.Amount
 import com.judopay.model.CardNetwork
@@ -73,7 +74,7 @@ class DemoFeatureListActivity : AppCompatActivity() {
                     AlertDialog.Builder(this)
                         .setTitle("Transaction ${receipt?.receiptId} successful")
                         .setPositiveButton(R.string.close) { dialog, _ -> dialog.dismiss() }.show()
-                } else {
+                } else if (resultCode == RESULT_ERROR) {
                     AlertDialog.Builder(this)
                         .setTitle(R.string.transaction_unsuccessful)
                         .setPositiveButton(R.string.close) { dialog, _ -> dialog.dismiss() }.show()
