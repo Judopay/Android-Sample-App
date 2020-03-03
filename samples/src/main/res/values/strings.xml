@@ -54,4 +54,7 @@
     <string name="home">Home</string>
     <string name="card_details">Card details</string>
     <string name="ideal_custom_button">Custom button to perform iDEAL payment</string>
+    <string name="check_card_description">to validate a card</string>
+    <string name="save_card">Save card</string>
+
 </resources>

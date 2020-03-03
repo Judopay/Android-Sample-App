@@ -21,6 +21,7 @@ import com.google.android.gms.wallet.PaymentData;
 import com.google.android.gms.wallet.PaymentDataRequest;
 import com.google.android.gms.wallet.PaymentsClient;
 import com.google.android.gms.wallet.WalletConstants;
+import com.judopay.CheckCardActivity;
 import com.judopay.IdealPaymentActivity;
 import com.judopay.Judo;
 import com.judopay.JudoApiService;
@@ -28,7 +29,9 @@ import com.judopay.PaymentActivity;
 import com.judopay.PaymentMethodActivity;
 import com.judopay.PreAuthActivity;
 import com.judopay.RegisterCardActivity;
+import com.judopay.SaveCardActivity;
 import com.judopay.arch.GooglePaymentUtils;
+import com.judopay.model.Address;
 import com.judopay.model.Currency;
 import com.judopay.model.CustomLayout;
 import com.judopay.model.GooglePayRequest;
@@ -50,6 +53,7 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
+import static com.judopay.Judo.CHECK_CARD_REQUEST;
 import static com.judopay.Judo.IDEAL_ORDER_ID;
 import static com.judopay.Judo.IDEAL_PAYMENT;
 import static com.judopay.Judo.IDEAL_STATUS;
@@ -59,14 +63,15 @@ import static com.judopay.Judo.PAYMENT_REQUEST;
 import static com.judopay.Judo.PRE_AUTH_REQUEST;
 import static com.judopay.Judo.REGISTER_CARD_REQUEST;
 import static com.judopay.Judo.SANDBOX;
+import static com.judopay.Judo.SAVE_CARD_REQUEST;
 import static com.judopay.Judo.TOKEN_PAYMENT_REQUEST;
 import static com.judopay.Judo.TOKEN_PRE_AUTH_REQUEST;
 
 public class MainActivity extends BaseActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
-    private static final String JUDO_ID = "<JUDO_ID>";
-    private static final String API_TOKEN = "<API_TOKEN>";
-    private static final String API_SECRET = "<API_SECRET>";
+    private static final String JUDO_ID = "256560";
+    private static final String API_TOKEN = "Of5HySMlLam3a1oE";
+    private static final String API_SECRET = "dea53a466fac0501e48fade708a9f562377a5a9f8aec2091ba2f65f82850684d";
     private static final String AMOUNT = "0.10";
     private static final String REFERENCE = UUID.randomUUID().toString();
 
@@ -139,6 +144,20 @@ public class MainActivity extends BaseActivity {
         Intent intent = new Intent(this, RegisterCardActivity.class);
         intent.putExtra(Judo.JUDO_OPTIONS, getJudo());
         startActivityForResult(intent, REGISTER_CARD_REQUEST);
+    }
+
+    public void performCheckCard(View view) {
+        Judo judo = getJudo();
+        judo = judo.newBuilder().setAddress(new Address("","","","", "",1)).build();
+        Intent intent = new Intent(this, CheckCardActivity.class);
+        intent.putExtra(Judo.JUDO_OPTIONS, judo);
+        startActivityForResult(intent, CHECK_CARD_REQUEST);
+    }
+
+    public void performSaveCard(View view) {
+        Intent intent = new Intent(this, SaveCardActivity.class);
+        intent.putExtra(Judo.JUDO_OPTIONS, getJudo());
+        startActivityForResult(intent, SAVE_CARD_REQUEST);
     }
 
     public void performTokenPreAuth(View view) {
@@ -229,6 +248,78 @@ public class MainActivity extends BaseActivity {
                 break;
             case Judo.GPAY_REQUEST:
                 handleGPAYRequest(resultCode, data);
+                break;
+            case CHECK_CARD_REQUEST:
+                switch (resultCode) {
+                    case Judo.RESULT_SUCCESS:
+                        Receipt response = data.getParcelableExtra(JUDO_RECEIPT);
+                        if (response != null) {
+                            new AlertDialog.Builder(this)
+                                    .setTitle("Check card successful")
+                                    .setMessage("Receipt ID: " + response.getReceiptId())
+                                    .setPositiveButton(R.string.ok, (dialog, which) -> dialog.dismiss())
+                                    .create()
+                                    .show();
+                        }
+                        break;
+
+                    case Judo.RESULT_ERROR:
+                        new AlertDialog.Builder(this)
+                                .setTitle(getString(R.string.transaction_error))
+                                .setMessage(getString(R.string.could_not_perform_transaction_check_settings))
+                                .setPositiveButton(R.string.ok, (dialog, which) -> dialog.dismiss())
+                                .create()
+                                .show();
+                        break;
+
+                    case Judo.RESULT_DECLINED:
+                        Receipt declinedResponse = data.getParcelableExtra(JUDO_RECEIPT);
+                        if (declinedResponse != null) {
+                            new AlertDialog.Builder(this)
+                                    .setTitle("Check card declined")
+                                    .setMessage("Receipt ID: " + declinedResponse.getReceiptId())
+                                    .setPositiveButton(R.string.ok, (dialog, which) -> dialog.dismiss())
+                                    .create()
+                                    .show();
+                        }
+                        break;
+                }
+                break;
+            case SAVE_CARD_REQUEST:
+                switch (resultCode) {
+                    case Judo.RESULT_SUCCESS:
+                        Receipt response = data.getParcelableExtra(JUDO_RECEIPT);
+                        if (response != null) {
+                            new AlertDialog.Builder(this)
+                                    .setTitle("Card saved")
+                                    .setMessage("Receipt ID: " + response.getReceiptId())
+                                    .setPositiveButton(R.string.ok, (dialog, which) -> dialog.dismiss())
+                                    .create()
+                                    .show();
+                        }
+                        break;
+
+                    case Judo.RESULT_ERROR:
+                        new AlertDialog.Builder(this)
+                                .setTitle(getString(R.string.transaction_error))
+                                .setMessage(getString(R.string.could_not_perform_transaction_check_settings))
+                                .setPositiveButton(R.string.ok, (dialog, which) -> dialog.dismiss())
+                                .create()
+                                .show();
+                        break;
+
+                    case Judo.RESULT_DECLINED:
+                        Receipt declinedResponse = data.getParcelableExtra(JUDO_RECEIPT);
+                        if (declinedResponse != null) {
+                            new AlertDialog.Builder(this)
+                                    .setTitle("Save card declined")
+                                    .setMessage("Receipt ID: " + declinedResponse.getReceiptId())
+                                    .setPositiveButton(R.string.ok, (dialog, which) -> dialog.dismiss())
+                                    .create()
+                                    .show();
+                        }
+                        break;
+                }
                 break;
         }
     }
