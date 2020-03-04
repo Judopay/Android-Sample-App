@@ -69,7 +69,7 @@ import static com.judopay.Judo.TOKEN_PRE_AUTH_REQUEST;
 
 public class MainActivity extends BaseActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
-    private static final String JUDO_ID = "256560";
+    private static final String JUDO_ID = "100-480-987";
     private static final String API_TOKEN = "Of5HySMlLam3a1oE";
     private static final String API_SECRET = "dea53a466fac0501e48fade708a9f562377a5a9f8aec2091ba2f65f82850684d";
     private static final String AMOUNT = "0.10";
@@ -148,7 +148,6 @@ public class MainActivity extends BaseActivity {
 
     public void performCheckCard(View view) {
         Judo judo = getJudo();
-        judo = judo.newBuilder().setAddress(new Address("","","","", "",1)).build();
         Intent intent = new Intent(this, CheckCardActivity.class);
         intent.putExtra(Judo.JUDO_OPTIONS, judo);
         startActivityForResult(intent, CHECK_CARD_REQUEST);
