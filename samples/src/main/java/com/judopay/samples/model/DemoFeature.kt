@@ -17,3 +17,6 @@ enum class DemoFeature(
     PAYMENT_METHODS(R.string.feature_title_payment_methods, R.string.feature_surtitle_payment_methods),
     PREAUTH_PAYMENT_METHODS(R.string.feature_title_preauth_payment_methods, R.string.feature_surtitle_preauth_payment_methods),
 }
+
+val DemoFeature.isGooglePay: Boolean
+    get() = this == DemoFeature.GOOGLE_PAY_PAYMENT || this == DemoFeature.GOOGLE_PAY_PREAUTH

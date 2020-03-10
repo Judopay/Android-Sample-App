@@ -63,4 +63,8 @@
     <string name="payment_methods_title">Payment methods</string>
     <string name="payment_methods_summary">Payment methods you want to support</string>
 
+    <string name="dialog_error_title">Error</string>
+    <string name="dialog_success_title">Success</string>
+    <string name="dialog_button_ok">Ok</string>
+
 </resources>
