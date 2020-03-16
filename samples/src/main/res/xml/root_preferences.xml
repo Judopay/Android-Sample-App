@@ -1,0 +1,81 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory app:title="@string/api_header">
+
+        <SwitchPreferenceCompat
+            app:defaultValue="true"
+            app:key="is_sandboxed"
+            app:summary="@string/is_sandboxed_summary"
+            app:title="@string/is_sandboxed_title" />
+
+        <EditTextPreference
+            android:defaultValue="false"
+            app:defaultValue="@string/default_judo_id"
+            app:key="judo_id"
+            app:summary="@string/judo_id_summary"
+            app:title="@string/judo_id_title" />
+
+        <EditTextPreference
+            app:defaultValue="@string/default_site_id"
+            app:key="site_id"
+            app:summary="@string/site_id_summary"
+            app:title="@string/site_id_title" />
+
+        <EditTextPreference
+            app:defaultValue="@string/default_token"
+            app:key="token"
+            app:summary="@string/token_summary"
+            app:title="@string/token_title" />
+
+        <EditTextPreference
+            app:defaultValue="@string/default_secret"
+            app:key="secret"
+            app:summary="@string/secret_summary"
+            app:title="@string/secret_title" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/amount_header">
+
+        <EditTextPreference
+            app:defaultValue="0.1"
+            app:key="amount"
+            app:summary="@string/amount_summary"
+            app:title="@string/amount_title"
+            app:useSimpleSummaryProvider="true" />
+
+        <ListPreference
+            app:defaultValue="GBP"
+            app:entries="@array/currency_entries"
+            app:entryValues="@array/currency_values"
+            app:key="currency"
+            app:summary="@string/currency_summary"
+            app:title="@string/currency_title"
+            app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/others_header">
+
+        <MultiSelectListPreference
+            app:defaultValue="@array/default_card_networks_values"
+            app:entries="@array/card_networks_entries"
+            app:entryValues="@array/card_networks_values"
+            app:key="supported_networks"
+            app:summary="@string/card_networks_summary"
+            app:title="@string/card_networks_title"
+            app:useSimpleSummaryProvider="true"/>
+
+        <MultiSelectListPreference
+            app:defaultValue="@array/default_payment_methods_values"
+            app:entries="@array/payment_methods_entries"
+            app:entryValues="@array/payment_methods_values"
+            app:key="payment_methods"
+            app:summary="@string/payment_methods_summary"
+            app:title="@string/payment_methods_title"
+            app:useSimpleSummaryProvider="true"/>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

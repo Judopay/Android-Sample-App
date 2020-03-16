@@ -17,21 +17,30 @@
         android:allowBackup="false"
         android:fullBackupContent="false"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/judopay"
-        android:theme="@style/AppTheme"
-        tools:ignore="GoogleAppIndexingWarning">
-
-        <activity android:name=".MainActivity">
+        android:label="@string/app_name"
+        android:theme="@style/Theme.DemoApp"
+        tools:ignore="GoogleAppIndexingWarning"
+        android:name="androidx.multidex.MultiDexApplication">
+        <activity
+            android:name=".settings.SettingsActivity"
+            android:label="@string/title_settings"
+            android:parentActivityName=".feature.DemoFeatureListActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.judopay.samples.feature.DemoFeatureListActivity" />
+        </activity>
+        <activity
+            android:name=".feature.DemoFeatureListActivity"
+            android:label="@string/title_activity_demo_feature_list"
+            android:theme="@style/Theme.DemoApp">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".settings.SettingsActivity" />
-
-        <activity android:name=".response.CardDetailsActivity" />
-        <activity android:name=".response.ReceiptActivity" />
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="48353c55c5341cdb82eb38812dfff4209d00118b" />
