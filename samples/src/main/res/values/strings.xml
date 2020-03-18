@@ -67,4 +67,23 @@
     <string name="dialog_success_title">Success</string>
     <string name="dialog_button_ok">Ok</string>
 
+    <string name="google_pay_header">Google Pay</string>
+    <string name="google_pay_is_production_title">Production environment</string>
+    <string name="google_pay_is_production_summary">Use Google Pay production environment.</string>
+
+    <string name="billing_address_title">Billing address</string>
+    <string name="billing_address_summary">Billing address format required to complete the transaction.</string>
+
+    <string name="shipping_address_title">Shipping address</string>
+    <string name="shipping_address_summary">Turn on to request a full shipping address.</string>
+
+    <string name="shipping_address_phone_number_title">Shipping address phone number</string>
+    <string name="shipping_address_phone_number_summary">Turn on to request a shipping address phone number.</string>
+
+    <string name="billing_address_phone_number_title">Billing address phone number</string>
+    <string name="billing_address_phone_number_summary">Turn on to request a billing address phone number.</string>
+
+    <string name="email_address_title">Email address</string>
+    <string name="email_address_summary">Turn on to request a email address.</string>
+
 </resources>

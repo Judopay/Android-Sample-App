@@ -22,15 +22,15 @@
         tools:ignore="GoogleAppIndexingWarning"
         android:name="androidx.multidex.MultiDexApplication">
         <activity
-            android:name=".settings.SettingsActivity"
+            android:name="com.judopay.samples.settings.SettingsActivity"
             android:label="@string/title_settings"
-            android:parentActivityName=".feature.DemoFeatureListActivity">
+            android:parentActivityName="com.judopay.samples.feature.DemoFeatureListActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.judopay.samples.feature.DemoFeatureListActivity" />
         </activity>
         <activity
-            android:name=".feature.DemoFeatureListActivity"
+            android:name="com.judopay.samples.feature.DemoFeatureListActivity"
             android:label="@string/title_activity_demo_feature_list"
             android:theme="@style/Theme.DemoApp">
             <intent-filter>
