@@ -62,7 +62,7 @@
 
     <string-array name="card_networks_values">
         <item>VISA</item>
-        <item>MASTER_CARD</item>
+        <item>MASTERCARD</item>
         <item>MAESTRO</item>
         <item>AMEX</item>
         <item>CHINA_UNION_PAY</item>
@@ -73,8 +73,10 @@
 
     <string-array name="default_card_networks_values">
         <item>VISA</item>
-        <item>MASTER_CARD</item>
-        <item>MAESTRO</item>
+        <item>MASTERCARD</item>
+        <item>AMEX</item>
+        <item>JCB</item>
+        <item>DISCOVER</item>
     </string-array>
 
     <!-- Supported payment methods Preference-->
@@ -93,6 +95,18 @@
     <string-array name="default_payment_methods_values">
         <item>CARD</item>
         <item>IDEAL</item>
+    </string-array>
+
+    <string-array name="google_pay_address_values">
+        <item>NONE</item>
+        <item>MIN</item>
+        <item>FULL</item>
+    </string-array>
+
+    <string-array name="google_pay_address_entries">
+        <item>Not required</item>
+        <item>MIN: Name, country code, and postal code.</item>
+        <item>FULL: Name, street address, locality, region, country code, and postal code.</item>
     </string-array>
 
 </resources>

@@ -56,6 +56,49 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory app:title="@string/google_pay_header">
+
+        <SwitchPreferenceCompat
+            app:defaultValue="false"
+            app:key="is_google_pay_production_environment"
+            app:summary="@string/google_pay_is_production_summary"
+            app:title="@string/google_pay_is_production_title" />
+
+        <ListPreference
+            app:defaultValue="NONE"
+            app:entries="@array/google_pay_address_entries"
+            app:entryValues="@array/google_pay_address_values"
+            app:key="billing_address"
+            app:summary="@string/billing_address_summary"
+            app:title="@string/billing_address_title"
+            app:useSimpleSummaryProvider="true" />
+
+        <SwitchPreferenceCompat
+            app:defaultValue="false"
+            app:key="is_billing_address_phone_number_required"
+            app:summary="@string/billing_address_phone_number_summary"
+            app:title="@string/billing_address_phone_number_title" />
+
+        <SwitchPreferenceCompat
+            app:defaultValue="false"
+            app:key="is_shipping_address_required"
+            app:summary="@string/shipping_address_summary"
+            app:title="@string/shipping_address_title" />
+
+        <SwitchPreferenceCompat
+            app:defaultValue="false"
+            app:key="is_shipping_address_phone_number_required"
+            app:summary="@string/shipping_address_phone_number_summary"
+            app:title="@string/shipping_address_phone_number_title" />
+
+        <SwitchPreferenceCompat
+            app:defaultValue="false"
+            app:key="is_email_address_required"
+            app:summary="@string/email_address_summary"
+            app:title="@string/email_address_title" />
+
+    </PreferenceCategory>
+
     <PreferenceCategory app:title="@string/others_header">
 
         <MultiSelectListPreference
@@ -65,7 +108,7 @@
             app:key="supported_networks"
             app:summary="@string/card_networks_summary"
             app:title="@string/card_networks_title"
-            app:useSimpleSummaryProvider="true"/>
+            app:useSimpleSummaryProvider="true" />
 
         <MultiSelectListPreference
             app:defaultValue="@array/default_payment_methods_values"
@@ -74,7 +117,7 @@
             app:key="payment_methods"
             app:summary="@string/payment_methods_summary"
             app:title="@string/payment_methods_title"
-            app:useSimpleSummaryProvider="true"/>
+            app:useSimpleSummaryProvider="true" />
 
     </PreferenceCategory>
 
